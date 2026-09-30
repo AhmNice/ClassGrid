@@ -1,0 +1,434 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------------------------------------------------------
+// Enums
+// -----------------------------------------------------------------------------
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum TermName {
+  FIRST
+  SECOND
+  THIRD
+}
+
+enum TimetableStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum PeriodKind {
+  LESSON // can hold timetable entries
+  BREAK // short break / long break / lunch / assembly — display only
+}
+
+enum ClassStage {
+  JSS
+  SS
+}
+
+enum RoomType {
+  CLASSROOM
+  COMPUTER_LAB
+  SCIENCE_LAB
+  HALL
+  LIBRARY
+  OTHER
+}
+
+enum AvailabilityStatus {
+  UNAVAILABLE // hard constraint
+  PREFERRED // soft preference (used by future generator)
+  // Absence of a row means "AVAILABLE" (sparse storage).
+}
+
+enum UserRole {
+  ADMIN
+  TIMETABLE_OFFICER
+}
+
+// -----------------------------------------------------------------------------
+// Tenancy / auth
+// -----------------------------------------------------------------------------
+
+model School {
+  id          String      @id @default(uuid()) @db.Uuid
+  name        String
+  logoUrl     String?
+  address     String?
+  phone       String?
+  email       String?
+  // Which days the school teaches. Avoids a separate SchoolDay table for MVP.
+  workingDays DayOfWeek[] @default([MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users            User[]
+  academicSessions AcademicSession[]
+  classLevels      ClassLevel[]
+  teachers         Teacher[]
+  subjects         Subject[]
+  rooms            Room[]
+  periods          Period[]
+}
+
+model User {
+  id           String    @id @default(uuid()) @db.Uuid
+  schoolId     String    @db.Uuid
+  email        String    @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  role         UserRole  @default(TIMETABLE_OFFICER)
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+
+  // Audit back-relations (named because User is referenced several times)
+  createdTimetables   Timetable[]          @relation("TimetableCreatedBy")
+  updatedTimetables   Timetable[]          @relation("TimetableUpdatedBy")
+  publishedTimetables Timetable[]          @relation("TimetablePublishedBy")
+  createdEntries      TimetableEntry[]     @relation("EntryCreatedBy")
+  updatedEntries      TimetableEntry[]     @relation("EntryUpdatedBy")
+  createdAssignments  TeachingAssignment[] @relation("AssignmentCreatedBy")
+  updatedAssignments  TeachingAssignment[] @relation("AssignmentUpdatedBy")
+
+  @@index([schoolId])
+}
+
+// -----------------------------------------------------------------------------
+// Academic calendar
+// -----------------------------------------------------------------------------
+
+model AcademicSession {
+  id        String    @id @default(uuid()) @db.Uuid
+  schoolId  String    @db.Uuid
+  name      String // "2026/2027"
+  startDate DateTime? @db.Date
+  endDate   DateTime? @db.Date
+  isCurrent Boolean   @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school              School               @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  terms               Term[]
+  teachingAssignments TeachingAssignment[]
+
+  @@unique([schoolId, name])
+  @@index([schoolId, isCurrent])
+}
+
+model Term {
+  id        String    @id @default(uuid()) @db.Uuid
+  sessionId String    @db.Uuid
+  name      TermName
+  startDate DateTime? @db.Date
+  endDate   DateTime? @db.Date
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  session    AcademicSession @relation(fields: [sessionId], references: [id], onDelete: Restrict)
+  timetables Timetable[]
+
+  @@unique([sessionId, name])
+}
+
+// -----------------------------------------------------------------------------
+// Classes
+// -----------------------------------------------------------------------------
+
+// A level: "JSS 1", "SS 3". Not scheduled directly.
+model ClassLevel {
+  id       String     @id @default(uuid()) @db.Uuid
+  schoolId String     @db.Uuid
+  name     String // "JSS 1"
+  stage    ClassStage
+  rank     Int // ordering / promotion path: JSS1=1 ... SS3=6
+  isActive Boolean    @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school School     @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  arms   ClassArm[]
+
+  @@unique([schoolId, name])
+  @@index([schoolId, rank])
+}
+
+// An arm: "JSS1A". This is the thing that gets scheduled.
+model ClassArm {
+  id           String  @id @default(uuid()) @db.Uuid
+  classLevelId String  @db.Uuid
+  name         String // "A", "B", "Gold", "Science"
+  isActive     Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  classLevel          ClassLevel           @relation(fields: [classLevelId], references: [id], onDelete: Restrict)
+  teachingAssignments TeachingAssignment[]
+
+  @@unique([classLevelId, name])
+}
+
+// -----------------------------------------------------------------------------
+// Master data: teachers, subjects, rooms, periods
+// -----------------------------------------------------------------------------
+
+model Teacher {
+  id        String  @id @default(uuid()) @db.Uuid
+  schoolId  String  @db.Uuid
+  title     String? // "Mr", "Mrs", "Dr"
+  firstName String
+  lastName  String
+  email     String?
+  phone     String?
+  staffCode String?
+  isActive  Boolean @default(true)
+
+  // Optional workload rules (null = no limit). Cheap now, useful for the generator.
+  maxPeriodsPerDay      Int?
+  maxPeriodsPerWeek     Int?
+  maxConsecutivePeriods Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school              School                @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  teachingAssignments TeachingAssignment[]
+  availability        TeacherAvailability[]
+
+  @@unique([schoolId, staffCode])
+  @@index([schoolId, isActive])
+}
+
+model Subject {
+  id       String  @id @default(uuid()) @db.Uuid
+  schoolId String  @db.Uuid
+  name     String // "Mathematics"
+  code     String? // "MTH"
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school              School               @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  teachingAssignments TeachingAssignment[]
+
+  @@unique([schoolId, name])
+  @@unique([schoolId, code])
+}
+
+model Room {
+  id       String   @id @default(uuid()) @db.Uuid
+  schoolId String   @db.Uuid
+  name     String // "Room 4", "Computer Lab"
+  type     RoomType @default(CLASSROOM)
+  capacity Int?
+  isActive Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school  School           @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  entries TimetableEntry[]
+
+  @@unique([schoolId, name])
+  @@index([schoolId, type])
+}
+
+// Bell schedule. Breaks live here too (kind = BREAK) so the day renders in order,
+// but only LESSON periods may be referenced by entries / availability (app-enforced).
+model Period {
+  id        String     @id @default(uuid()) @db.Uuid
+  schoolId  String     @db.Uuid
+  name      String // "Period 1", "Short Break"
+  kind      PeriodKind @default(LESSON)
+  sequence  Int // display/order position within the day
+  startTime String // "08:00" (HH:mm, school-local); see review notes
+  endTime   String // "08:40"
+  isActive  Boolean    @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school       School                @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  entries      TimetableEntry[]
+  availability TeacherAvailability[]
+
+  // Uniqueness of (schoolId, sequence) among ACTIVE rows is enforced by a partial
+  // unique index in raw SQL (see header).
+  @@index([schoolId, isActive, sequence])
+}
+
+// -----------------------------------------------------------------------------
+// Teaching assignments
+// -----------------------------------------------------------------------------
+
+// "Mr Ibrahim teaches Mathematics to JSS1A, 5 periods/week, in 2026/2027."
+model TeachingAssignment {
+  id             String  @id @default(uuid()) @db.Uuid
+  sessionId      String  @db.Uuid
+  teacherId      String  @db.Uuid
+  subjectId      String  @db.Uuid
+  classArmId     String  @db.Uuid
+  periodsPerWeek Int
+  isActive       Boolean @default(true)
+
+  // Optional scheduling hints for the future generator (all nullable/defaulted)
+  maxPeriodsPerDay     Int?
+  requiresDoublePeriod Boolean   @default(false)
+  requiredRoomType     RoomType? // e.g. COMPUTER_LAB for Computer Studies
+
+  createdById String?  @db.Uuid
+  updatedById String?  @db.Uuid
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  session   AcademicSession @relation(fields: [sessionId], references: [id], onDelete: Restrict)
+  teacher   Teacher         @relation(fields: [teacherId], references: [id], onDelete: Restrict)
+  subject   Subject         @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+  classArm  ClassArm        @relation(fields: [classArmId], references: [id], onDelete: Restrict)
+  createdBy User?           @relation("AssignmentCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy User?           @relation("AssignmentUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  entries TimetableEntry[]
+
+  // Prevent accidental duplicates. Co-teaching (two teachers, same subject+arm)
+  // remains possible. To forbid it, use @@unique([sessionId, classArmId, subjectId]).
+  @@unique([sessionId, teacherId, subjectId, classArmId])
+  // Target of the composite FK from TimetableEntry (guarantees that an entry's
+  // teacherId/classArmId always match its assignment).
+  @@unique([id, teacherId, classArmId])
+  @@index([teacherId])
+  @@index([classArmId])
+  @@index([sessionId, isActive])
+}
+
+// -----------------------------------------------------------------------------
+// Teacher availability (sparse: only exceptions are stored)
+// -----------------------------------------------------------------------------
+
+model TeacherAvailability {
+  id        String             @id @default(uuid()) @db.Uuid
+  teacherId String             @db.Uuid
+  dayOfWeek DayOfWeek
+  periodId  String             @db.Uuid
+  status    AvailabilityStatus
+  reason    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  period  Period  @relation(fields: [periodId], references: [id], onDelete: Restrict)
+
+  @@unique([teacherId, dayOfWeek, periodId])
+  @@index([periodId])
+}
+
+// -----------------------------------------------------------------------------
+// Timetable + entries
+// -----------------------------------------------------------------------------
+
+model Timetable {
+  id      String          @id @default(uuid()) @db.Uuid
+  termId  String          @db.Uuid // session and school are reachable via Term
+  name    String
+  version Int // 1, 2, 3 ... per term
+  status  TimetableStatus @default(DRAFT)
+
+  // Lineage: which timetable this one was duplicated from
+  basedOnId String? @db.Uuid
+
+  createdById   String?   @db.Uuid
+  updatedById   String?   @db.Uuid
+  publishedById String?   @db.Uuid
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  publishedAt   DateTime?
+  archivedAt    DateTime?
+
+  term        Term        @relation(fields: [termId], references: [id], onDelete: Restrict)
+  basedOn     Timetable?  @relation("TimetableLineage", fields: [basedOnId], references: [id], onDelete: SetNull)
+  derivedFrom Timetable[] @relation("TimetableLineage")
+  createdBy   User?       @relation("TimetableCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy   User?       @relation("TimetableUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  publishedBy User?       @relation("TimetablePublishedBy", fields: [publishedById], references: [id], onDelete: SetNull)
+
+  entries TimetableEntry[]
+  // "Only one PUBLISHED per term" is a partial unique index in raw SQL (see header).
+
+  @@unique([termId, version])
+  @@index([termId, status])
+}
+
+model TimetableEntry {
+  id          String    @id @default(uuid()) @db.Uuid
+  timetableId String    @db.Uuid
+  dayOfWeek   DayOfWeek
+  periodId    String    @db.Uuid
+
+  // Source of truth for "what is being taught"
+  assignmentId String @db.Uuid
+  // Deliberate denormalisation of assignment.teacherId / assignment.classArmId so the
+  // database can enforce teacher and class clashes with plain unique constraints.
+  // The composite FK below makes it impossible for them to disagree with the assignment.
+  teacherId    String @db.Uuid
+  classArmId   String @db.Uuid
+
+  roomId   String? @db.Uuid
+  isLocked Boolean @default(false) // pinned entries: generator must not move them
+  note     String?
+
+  createdById String?  @db.Uuid
+  updatedById String?  @db.Uuid
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  timetable Timetable @relation(fields: [timetableId], references: [id], onDelete: Cascade)
+  period    Period    @relation(fields: [periodId], references: [id], onDelete: Restrict)
+  room      Room?     @relation(fields: [roomId], references: [id], onDelete: Restrict)
+  createdBy User?     @relation("EntryCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy User?     @relation("EntryUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  // Composite FK: (assignmentId, teacherId, classArmId) must match a real assignment row.
+  // onUpdate: Restrict => an assignment referenced by entries cannot silently change teacher/arm.
+  assignment TeachingAssignment @relation(fields: [assignmentId, teacherId, classArmId], references: [id, teacherId, classArmId], onDelete: Restrict, onUpdate: Restrict)
+
+  // ---- Clash prevention (Postgres treats NULL roomId as distinct, so room-less
+  //      entries never collide with each other) ----
+  @@unique([timetableId, dayOfWeek, periodId, classArmId], map: "uq_entry_class_clash")
+  @@unique([timetableId, dayOfWeek, periodId, teacherId], map: "uq_entry_teacher_clash")
+  @@unique([timetableId, dayOfWeek, periodId, roomId], map: "uq_entry_room_clash")
+  @@index([timetableId])
+  @@index([assignmentId])
+  @@index([teacherId])
+  @@index([classArmId])
+  @@index([periodId])
+  @@index([roomId])
+}

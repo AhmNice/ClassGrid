@@ -1,0 +1,51 @@
+import { env } from "./index.js"
+
+interface Config {
+  NODE_ENV: "development" | "production" | "test";
+  PORT: number;
+  DATABASE_URL: string;
+  REDIS_URL: string;
+  CORS_ORIGIN?: string;
+
+  JWT_SECRET: string;
+  ACCESS_TOKEN_SECRET: string;
+  REFRESH_TOKEN_SECRET: string;
+  ACCESS_TOKEN_NAME: string;
+  REFRESH_TOKEN_NAME: string;
+  ACCESS_TOKEN_EXPIRATION: string;
+  REFRESH_TOKEN_EXPIRATION: string;
+
+  EMAIL_HOST: string;
+  EMAIL_PORT: number;
+  EMAIL_USER: string;
+  EMAIL_PASSWORD: string;
+  RESEND_API_KEY: string;
+
+  LOG_LEVEL: "debug" | "info" | "warn" | "error";
+}
+
+const config: Config = {
+  NODE_ENV: env.NODE_ENV,
+  PORT: env.PORT,
+  DATABASE_URL: env.DATABASE_URL,
+  REDIS_URL: env.REDIS_URL,
+  CORS_ORIGIN: env.CORS_ORIGIN,
+
+  JWT_SECRET: env.JWT_SECRET,
+  ACCESS_TOKEN_SECRET: env.ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET: env.REFRESH_TOKEN_SECRET,
+  ACCESS_TOKEN_NAME: env.ACCESS_TOKEN_NAME,
+  REFRESH_TOKEN_NAME: env.REFRESH_TOKEN_NAME,
+  ACCESS_TOKEN_EXPIRATION: env.ACCESS_TOKEN_EXPIRATION,
+  REFRESH_TOKEN_EXPIRATION: env.REFRESH_TOKEN_EXPIRATION,
+
+  EMAIL_HOST: env.EMAIL_HOST,
+  EMAIL_PORT: env.EMAIL_PORT,
+  EMAIL_USER: env.EMAIL_USER,
+  EMAIL_PASSWORD: env.EMAIL_PASSWORD,
+  RESEND_API_KEY: env.RESEND_API_KEY,
+
+  LOG_LEVEL: env.LOG_LEVEL,
+};
+
+export default config;
