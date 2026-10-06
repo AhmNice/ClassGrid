@@ -2,7 +2,6 @@ import app from "./app.js";
 import config from "./config/config.js";
 import { prisma } from "./lib/prisma.js";
 
-
 let server: ReturnType<typeof app.listen>;
 
 const startServer = async () => {

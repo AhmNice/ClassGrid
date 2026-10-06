@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from "express";
+import { TokenType } from "@/types/general.js";
+import { Request, Response } from "express";
 
 export class ApiError extends Error {
   public statusCode: number;
@@ -27,22 +28,22 @@ export class ApiError extends Error {
     }
   }
 }
+export class TokenExpiredApiError extends ApiError {
+  constructor(type: TokenType) {
+    super(401, `Unauthorized: ${type} token expired.`);
+  }
+}
 
-export const errorHandler = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const errorHandler = (err: any, req: Request, res: Response) => {
   let error = err;
-  if(!(error instanceof ApiError)) {
+  if (!(error instanceof ApiError)) {
     error = new ApiError(
       error.statusCode || 500,
       error.message || "Internal Server Error",
       error.errors || [],
       error.details || null,
       error.stack,
-    )
+    );
   }
 
   const response = {
@@ -51,7 +52,7 @@ export const errorHandler = (
     statusCode: error.statusCode,
     errors: error.errors || [],
     ...(process.env.NODE_ENV === "development" && { stack: error.stack }),
-  }
+  };
 
   return res.status(error.statusCode || 500).json(response);
 };

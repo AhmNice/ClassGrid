@@ -14,17 +14,19 @@ const envSchema = z.object({
     .default("3000")
     .transform((val) => Number(val)),
 
-  JWT_SECRET: z.string().min(32, "JWT_SECRET must be at least 32 characters long"),
+  JWT_SECRET: z
+    .string()
+    .min(32, "JWT_SECRET must be at least 32 characters long"),
   ACCESS_TOKEN_NAME: z.string().default("access_token"),
   REFRESH_TOKEN_NAME: z.string().default("refresh_token"),
-  ACCESS_TOKEN_EXPIRATION: z
+  ACCESS_TOKEN_EXPIRATION: z.string().default("15m"),
+  REFRESH_TOKEN_EXPIRATION: z.string().default("7d"),
+  ACCESS_TOKEN_SECRET: z
     .string()
-    .default("15m"),
-  REFRESH_TOKEN_EXPIRATION: z
+    .min(32, "ACCESS_TOKEN_SECRET must be at least 32 characters long"),
+  REFRESH_TOKEN_SECRET: z
     .string()
-    .default("7d"),
-  ACCESS_TOKEN_SECRET: z.string().min(32, "ACCESS_TOKEN_SECRET must be at least 32 characters long"),
-  REFRESH_TOKEN_SECRET: z.string().min(32, "REFRESH_TOKEN_SECRET must be at least 32 characters long"),
+    .min(32, "REFRESH_TOKEN_SECRET must be at least 32 characters long"),
 
   EMAIL_HOST: z.string().default("smtp.mailtrap.io"),
   EMAIL_PORT: z
@@ -36,7 +38,10 @@ const envSchema = z.object({
 
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
 
-  RESEND_API_KEY: z.string().min(32, "RESEND_API_KEY must be at least 32 characters long"),
+  RESEND_API_KEY: z
+    .string()
+    .min(32, "RESEND_API_KEY must be at least 32 characters long"),
+  OTP_HMAC_SECRET: z.string().min(32),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

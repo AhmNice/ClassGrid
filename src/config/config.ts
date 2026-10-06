@@ -1,4 +1,4 @@
-import { env } from "./index.js"
+import { env } from "./index.js";
 
 interface Config {
   NODE_ENV: "development" | "production" | "test";
@@ -22,6 +22,7 @@ interface Config {
   RESEND_API_KEY: string;
 
   LOG_LEVEL: "debug" | "info" | "warn" | "error";
+  OTP_HMAC_SECRET: string;
 }
 
 const config: Config = {
@@ -44,8 +45,10 @@ const config: Config = {
   EMAIL_USER: env.EMAIL_USER,
   EMAIL_PASSWORD: env.EMAIL_PASSWORD,
   RESEND_API_KEY: env.RESEND_API_KEY,
-
+  OTP_HMAC_SECRET: env.OTP_HMAC_SECRET,
   LOG_LEVEL: env.LOG_LEVEL,
 };
-
+if (config.ACCESS_TOKEN_SECRET === config.REFRESH_TOKEN_SECRET) {
+  throw new Error("Access and refresh secrets must differ");
+}
 export default config;

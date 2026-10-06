@@ -114,6 +114,8 @@ model User {
   createdAssignments  TeachingAssignment[] @relation("AssignmentCreatedBy")
   updatedAssignments  TeachingAssignment[] @relation("AssignmentUpdatedBy")
 
+  // session
+  sessionTokens      SessionToken[]
   @@index([schoolId])
 }
 
@@ -146,6 +148,7 @@ model Term {
   name      TermName
   startDate DateTime? @db.Date
   endDate   DateTime? @db.Date
+  isCurrent Boolean   @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -154,6 +157,7 @@ model Term {
   timetables Timetable[]
 
   @@unique([sessionId, name])
+  @@index([sessionId, isCurrent])
 }
 
 // -----------------------------------------------------------------------------
@@ -235,6 +239,12 @@ model Subject {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  defaultPeriodsPerWeek   Int?
+  defaultMaxPeriodsPerDay Int?
+  defaultMaxConsecutive   Int?
+  defaultAllowConsecutive Boolean @default(false)
+
 
   school              School               @relation(fields: [schoolId], references: [id], onDelete: Restrict)
   teachingAssignments TeachingAssignment[]
@@ -431,4 +441,18 @@ model TimetableEntry {
   @@index([classArmId])
   @@index([periodId])
   @@index([roomId])
+}
+
+model SessionToken {
+  id             String    @id @default(uuid())
+  sessionTokenId String    @unique
+  userId         String    @db.Uuid
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
+  usedAt         DateTime?
+  revoked        Boolean   @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

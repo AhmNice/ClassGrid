@@ -539,33 +539,33 @@
 
 ClassGrid is considered MVP-complete when an administrator can:
 
-* [ ] Log in securely
-* [ ] Configure an academic session and term
-* [ ] Create classes and class arms
-* [ ] Create teachers
-* [ ] Create subjects
-* [ ] Create rooms
-* [ ] Configure school periods
-* [ ] Create teaching assignments
-* [ ] Specify required periods per week
-* [ ] Create a timetable version
-* [ ] Manually create timetable entries
-* [ ] Detect class clashes
-* [ ] Detect teacher clashes
-* [ ] Detect room clashes
-* [ ] Validate timetable completeness
-* [ ] Automatically generate a timetable
-* [ ] Review generated timetable
-* [ ] Manually modify generated timetable
-* [ ] Save timetable as draft
-* [ ] Publish a valid timetable
-* [ ] Archive previous timetable versions
-* [ ] View timetable by class
-* [ ] View timetable by teacher
-* [ ] View timetable by room
-* [ ] Export timetable to Excel
-* [ ] Export timetable to PDF
-* [ ] Deploy and operate the application in production
+- [ ] Log in securely
+- [ ] Configure an academic session and term
+- [ ] Create classes and class arms
+- [ ] Create teachers
+- [ ] Create subjects
+- [ ] Create rooms
+- [ ] Configure school periods
+- [ ] Create teaching assignments
+- [ ] Specify required periods per week
+- [ ] Create a timetable version
+- [ ] Manually create timetable entries
+- [ ] Detect class clashes
+- [ ] Detect teacher clashes
+- [ ] Detect room clashes
+- [ ] Validate timetable completeness
+- [ ] Automatically generate a timetable
+- [ ] Review generated timetable
+- [ ] Manually modify generated timetable
+- [ ] Save timetable as draft
+- [ ] Publish a valid timetable
+- [ ] Archive previous timetable versions
+- [ ] View timetable by class
+- [ ] View timetable by teacher
+- [ ] View timetable by room
+- [ ] Export timetable to Excel
+- [ ] Export timetable to PDF
+- [ ] Deploy and operate the application in production
 
 ---
 
@@ -573,23 +573,23 @@ ClassGrid is considered MVP-complete when an administrator can:
 
 These should **not block the MVP** unless they become necessary during implementation.
 
-* [ ] Teacher preferred periods
-* [ ] Subject preferred periods
-* [ ] Advanced teacher workload balancing
-* [ ] Advanced consecutive-period optimization
-* [ ] Free-period optimization
-* [ ] Multiple timetable generation strategies
-* [ ] Timetable comparison between versions
-* [ ] Timetable change history
-* [ ] Audit log UI
-* [ ] Public timetable sharing
-* [ ] Student timetable views
-* [ ] Teacher accounts
-* [ ] School-wide notifications
-* [ ] Excel timetable import
-* [ ] SMS integration
-* [ ] API integration with the existing School Management System
-* [ ] More advanced optimization algorithms
+- [ ] Teacher preferred periods
+- [ ] Subject preferred periods
+- [ ] Advanced teacher workload balancing
+- [ ] Advanced consecutive-period optimization
+- [ ] Free-period optimization
+- [ ] Multiple timetable generation strategies
+- [ ] Timetable comparison between versions
+- [ ] Timetable change history
+- [ ] Audit log UI
+- [ ] Public timetable sharing
+- [ ] Student timetable views
+- [ ] Teacher accounts
+- [ ] School-wide notifications
+- [ ] Excel timetable import
+- [ ] SMS integration
+- [ ] API integration with the existing School Management System
+- [ ] More advanced optimization algorithms
 
 ---
 
