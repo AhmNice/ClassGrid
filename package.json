@@ -8,7 +8,8 @@
   "lint-staged": {
     "*.{ts,js}": [
       "eslint --fix",
-      "prettier --write"
+      "prettier --write",
+      "jest --findRelatedTests"
     ]
   },
   "scripts": {
