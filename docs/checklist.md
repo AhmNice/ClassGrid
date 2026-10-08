@@ -17,27 +17,27 @@
 
 ### Day 1 — Project Setup
 
-- [ ] Initialize Express + TypeScript backend
-- [ ] Initialize React + TypeScript frontend
-- [ ] Configure ESLint, Prettier & Husky
-- [ ] Configure environment validation with Zod
-- [ ] Configure PostgreSQL & Prisma
-- [ ] Configure project folder structure
-- [ ] Configure Git repository
-- [ ] Configure application logging
+- [x] Initialize Express + TypeScript backend
+- [x] Initialize React + TypeScript frontend
+- [x] Configure ESLint, Prettier & Husky
+- [x] Configure environment validation with Zod
+- [x] Configure PostgreSQL & Prisma
+- [x] Configure project folder structure
+- [x] Configure Git repository
+- [x] Configure application logging
 
 ### Day 2 — Database Schema
 
-- [ ] Finalize Prisma schema
-- [ ] Define enums
-- [ ] Define school/session/term relationships
-- [ ] Define class and class-arm relationships
-- [ ] Define teacher, subject and room models
-- [ ] Define period model
-- [ ] Define teaching assignments
-- [ ] Define timetable and timetable-entry models
-- [ ] Add indexes and database constraints
-- [ ] Create initial migration
+- [x] Finalize Prisma schema
+- [x] Define enums
+- [x] Define school/session/term relationships
+- [x] Define class and class-arm relationships
+- [x] Define teacher, subject and room models
+- [x] Define period model
+- [x] Define teaching assignments
+- [x] Define timetable and timetable-entry models
+- [x] Add indexes and database constraints
+- [x] Create initial migration
 
 ### Day 3 — Database & Seed Data
 
@@ -76,21 +76,21 @@
 
 ### Day 6 — Academic Session & Term Management
 
-- [ ] Implement academic session CRUD
-- [ ] Implement term CRUD
-- [ ] Implement active session selection
-- [ ] Implement active term selection
-- [ ] Add session/term validation
-- [ ] Create session/term API tests
+- [x] Implement academic session CRUD
+- [x] Implement term CRUD
+- [x] Implement active session selection
+- [x] Implement active term selection
+- [x] Add session/term validation
+- [x] Create session/term API tests
 
 ### Day 7 — Classes & Class Arms
 
-- [ ] Implement class CRUD
-- [ ] Implement class-arm CRUD
-- [ ] Validate unique class-arm names
-- [ ] Implement class listing/filtering
+- [x] Implement class CRUD
+- [x] Implement class-arm CRUD
+- [x] Validate unique class-arm names
+- [x] Implement class listing/filtering
 - [ ] Implement class timetable endpoint
-- [ ] Write class module tests
+- [x] Write class module tests
 
 ### Day 8 — Teachers & Subjects
 
