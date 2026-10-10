@@ -106,9 +106,9 @@
 - [ ] Implement room CRUD
 - [ ] Configure room properties
 - [ ] Implement room timetable endpoint
-- [ ] Implement period CRUD
-- [ ] Configure period ordering
-- [ ] Configure working days
+- [x] Implement period CRUD
+- [x] Configure period ordering
+- [x] Configure working days
 - [ ] Write room/period tests
 
 ### Day 10 — Configuration Frontend

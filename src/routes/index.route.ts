@@ -5,6 +5,9 @@ import classArmRouter from "@/model/class/level/arm/arm.route.js";
 import teacherAvailabilityRouter from "@/model/teacher/availability.route.js";
 import teacherRouter from "@/model/teacher/teacher.route.js";
 import subjectRouter from "@/model/subject/subject.route.js";
+import roomRouter from "@/model/room/room.route.js";
+import periodRouter from "@/model/period/period.route.js";
+import schoolRouter from "@/model/school/school.route.js";
 import express from "express";
 
 const router = express.Router();
@@ -18,4 +21,7 @@ router.use("/class-levels/:classLevelId/arms", classArmRouter);
 router.use("/teachers/:teacherId/availability", teacherAvailabilityRouter);
 router.use("/teachers", teacherRouter);
 router.use("/subjects", subjectRouter);
+router.use("/rooms", roomRouter);
+router.use("/periods", periodRouter);
+router.use("/schools", schoolRouter);
 export default router;
