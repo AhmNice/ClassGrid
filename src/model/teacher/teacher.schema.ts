@@ -15,12 +15,15 @@ const paginationQuery = z.object({
 });
 
 const teacherFields = z.object({
-  schoolId: z.string().uuid(),
+  // schoolId: z.string().uuid(),
   title: z.string().trim().min(1).nullable().optional(),
   firstName: z.string().trim().min(1),
   lastName: z.string().trim().min(1),
   email: z.string().trim().email().nullable().optional(),
   phone: z.string().trim().min(1).nullable().optional(),
+  maxPeriodsPerDay: z.number().int().positive().nullable().optional(),
+  maxPeriodsPerWeek: z.number().int().positive().nullable().optional(),
+  maxConsecutivePeriods: z.number().int().positive().nullable().optional(),
   staffCode: z.string().trim().min(1).nullable().optional(),
   isActive: z.boolean().optional(),
 });
@@ -40,7 +43,6 @@ export const teacherIdReqSchema = z.object({
 export const updateTeacherReqSchema = z.object({
   params: teacherIdParams,
   body: teacherFields
-    .omit({ schoolId: true })
     .partial()
     .refine(
       (body) => Object.keys(body).length > 0,

@@ -8,11 +8,26 @@ import {
 } from "./academic-session.interface.js";
 import { academicSessionService } from "./academic-session.service.js";
 
+/**
+ * The school always comes from the logged-in user, never from the request
+ * body or URL. Adjust the `user` shape here to match what your auth
+ * middleware sets, or move this into that middleware.
+ */
+const getSchoolId = (req: Request): string => {
+  const user = (req as Request & { user?: { schoolId?: string } }).user;
+  if (!user?.schoolId) {
+    console.error("No school ID found in user object");
+    throw new ApiError(401, "You must be signed in to a school to do this");
+  }
+  return user.schoolId;
+};
+
 class AcademicSessionController {
   readonly createAcademicSession = asyncHandler(
     async (req: Request, res: Response) => {
       const session = await academicSessionService.createAcademicSession(
-        req.body as IAcademicSessionCreate,
+        getSchoolId(req),
+        req.body as Omit<IAcademicSessionCreate, "schoolId">,
       );
       res
         .status(201)
@@ -27,8 +42,10 @@ class AcademicSessionController {
   );
 
   readonly getAcademicSessions = asyncHandler(
-    async (_req: Request, res: Response) => {
-      const sessions = await academicSessionService.getAcademicSessions();
+    async (req: Request, res: Response) => {
+      const sessions = await academicSessionService.getAcademicSessions(
+        getSchoolId(req),
+      );
       res
         .status(200)
         .json(
@@ -41,10 +58,32 @@ class AcademicSessionController {
     },
   );
 
+  readonly getCurrentAcademicSession = asyncHandler(
+    async (req: Request, res: Response) => {
+      const session = await academicSessionService.currentAcademicSession(
+        getSchoolId(req),
+      );
+      // Having no current session is a normal state (a new school, or between
+      // sessions), so this is a 200 with null data, not an error.
+      res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            session,
+            session
+              ? "Current academic session fetched successfully"
+              : "No current academic session",
+          ),
+        );
+    },
+  );
+
   readonly getAcademicSession = asyncHandler(
     async (req: Request, res: Response) => {
       const session = await academicSessionService.getAcademicSessionById(
-        req.params.sessionId,
+        getSchoolId(req),
+        String(req.params.sessionId),
       );
       if (!session) throw new ApiError(404, "Academic session not found");
       res
@@ -62,7 +101,8 @@ class AcademicSessionController {
   readonly updateAcademicSession = asyncHandler(
     async (req: Request, res: Response) => {
       const session = await academicSessionService.updateAcademicSession(
-        req.params.sessionId,
+        getSchoolId(req),
+        String(req.params.sessionId),
         req.body as IAcademicSessionUpdate,
       );
       if (!session) throw new ApiError(404, "Academic session not found");
@@ -81,7 +121,8 @@ class AcademicSessionController {
   readonly deleteAcademicSession = asyncHandler(
     async (req: Request, res: Response) => {
       const deleted = await academicSessionService.deleteAcademicSession(
-        req.params.sessionId,
+        getSchoolId(req),
+        String(req.params.sessionId),
       );
       if (!deleted) throw new ApiError(404, "Academic session not found");
       res
@@ -95,7 +136,8 @@ class AcademicSessionController {
   readonly activateAcademicSession = asyncHandler(
     async (req: Request, res: Response) => {
       const session = await academicSessionService.activateAcademicSession(
-        req.params.sessionId,
+        getSchoolId(req),
+        String(req.params.sessionId),
       );
       if (!session) throw new ApiError(404, "Academic session not found");
       res

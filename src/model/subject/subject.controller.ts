@@ -12,15 +12,24 @@ import { subjectService } from "./subject.container.js";
 
 class SubjectController {
   readonly createSubject = asyncHandler(async (req: Request, res: Response) => {
-    const subject = await subjectService.createSubject(
-      req.body as ISubjectCreate,
-    );
+    const schoolId = req?.user?.schoolId as string;
+    if (!schoolId) {
+      throw new ApiError(400, "schoolId is required");
+    }
+    const subject = await subjectService.createSubject({
+      ...req.body,
+      schoolId,
+    } as ISubjectCreate);
     res
       .status(201)
       .json(new ApiResponse(201, subject, "Subject created successfully"));
   });
 
   readonly getSubjects = asyncHandler(async (req: Request, res: Response) => {
+    const schoolId = req?.user?.schoolId as string;
+    if (!schoolId) {
+      throw new ApiError(400, "schoolId is required");
+    }
     const result = await subjectService.getSubjects({
       ...normalizeListQuery({
         query:
@@ -34,7 +43,7 @@ class SubjectController {
             ? req.query.sortOrder
             : undefined,
       }),
-      schoolId: String(req.query.schoolId),
+      schoolId: schoolId,
       isActive:
         req.query.isActive === "true"
           ? true

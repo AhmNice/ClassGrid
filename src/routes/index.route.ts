@@ -1,7 +1,7 @@
 import AuthRouter from "@/model/authentication/route.js";
 import academicSessionRouter from "@/model/academic-session/session/academic-session.route.js";
 import termRouter from "@/model/academic-session/term/term.route.js";
-import classArmRouter from "@/model/class/level/arm/arm.route.js";
+import classLevelRouter from "@/model/class/level/class.route.js";
 import teacherAvailabilityRouter from "@/model/teacher/availability.route.js";
 import teacherRouter from "@/model/teacher/teacher.route.js";
 import subjectRouter from "@/model/subject/subject.route.js";
@@ -17,7 +17,7 @@ router.get("/health", (req, res) => {
 router.use("/auth", AuthRouter);
 router.use("/academic-sessions", academicSessionRouter);
 router.use("/academic-sessions/:sessionId/terms", termRouter);
-router.use("/class-levels/:classLevelId/arms", classArmRouter);
+router.use("/class-levels", classLevelRouter);
 router.use("/teachers/:teacherId/availability", teacherAvailabilityRouter);
 router.use("/teachers", teacherRouter);
 router.use("/subjects", subjectRouter);

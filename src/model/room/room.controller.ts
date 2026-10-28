@@ -3,18 +3,24 @@ import { asyncHandler } from "@/lib/asyncHandler.js";
 import { normalizeListQuery } from "@/types/pagination.js";
 import { ApiError } from "@/utils/errorHandler.js";
 import { ApiResponse } from "@/utils/api-response.js";
-import { IRoomCreate, IRoomProperties, IRoomUpdate } from "./room.interface.js";
+import { IRoomCreate, IRoomUpdate } from "./room.interface.js";
 import { roomService } from "./room.container.js";
 
 class RoomController {
   readonly createRoom = asyncHandler(async (req: Request, res: Response) => {
-    const room = await roomService.createRoom(req.body as IRoomCreate);
+    const schoolId = req.user?.schoolId;
+
+    const room = await roomService.createRoom({
+      ...req.body,
+      schoolId,
+    } as IRoomCreate);
     res
       .status(201)
       .json(new ApiResponse(201, room, "Room created successfully"));
   });
 
   readonly getRooms = asyncHandler(async (req: Request, res: Response) => {
+    const schoolId = req.user?.schoolId;
     const result = await roomService.getRooms({
       ...normalizeListQuery({
         query:
@@ -28,7 +34,7 @@ class RoomController {
             ? req.query.sortOrder
             : undefined,
       }),
-      schoolId: String(req.query.schoolId),
+      schoolId: String(schoolId),
       isActive:
         req.query.isActive === "true"
           ? true
@@ -91,21 +97,6 @@ class RoomController {
       .status(200)
       .json(new ApiResponse(200, room, "Room updated successfully"));
   });
-
-  readonly updateRoomProperties = asyncHandler(
-    async (req: Request, res: Response) => {
-      const room = await roomService.updateRoomProperties(
-        String(req.params.roomId),
-        req.body as IRoomProperties,
-      );
-      if (!room) throw new ApiError(404, "Room not found");
-      res
-        .status(200)
-        .json(
-          new ApiResponse(200, room, "Room properties updated successfully"),
-        );
-    },
-  );
 
   readonly deleteRoom = asyncHandler(async (req: Request, res: Response) => {
     const deleted = await roomService.deleteRoom(String(req.params.roomId));

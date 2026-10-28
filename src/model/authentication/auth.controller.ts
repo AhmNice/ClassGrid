@@ -21,6 +21,7 @@ class AuthController {
       userId: user.id,
       role: user.role,
       email: user.email,
+      schoolId: user.schoolId,
     };
     await SessionService.signTo(res, sessionPayload);
     res.status(200).json(new ApiResponse(200, user, "Login successful"));

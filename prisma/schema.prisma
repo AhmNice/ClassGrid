@@ -37,7 +37,10 @@ enum PeriodKind {
   LESSON // can hold timetable entries
   BREAK // short break / long break / lunch / assembly — display only
 }
-
+enum PeriodScheduleKind {
+  WEEKDAY_SCHEDULE
+  FRIDAY_SCHEDULE
+}
 enum ClassStage {
   JSS
   SS
@@ -87,6 +90,7 @@ model School {
   subjects         Subject[]
   rooms            Room[]
   periods          Period[]
+  periodSchedules  PeriodSchedule[]
 }
 
 model User {
@@ -115,7 +119,8 @@ model User {
   updatedAssignments  TeachingAssignment[] @relation("AssignmentUpdatedBy")
 
   // session
-  sessionTokens      SessionToken[]
+  sessionTokens SessionToken[]
+
   @@index([schoolId])
 }
 
@@ -143,12 +148,16 @@ model AcademicSession {
 }
 
 model Term {
-  id        String    @id @default(uuid()) @db.Uuid
-  sessionId String    @db.Uuid
-  name      TermName
-  startDate DateTime? @db.Date
-  endDate   DateTime? @db.Date
-  isCurrent Boolean   @default(false)
+  id               String    @id @default(uuid()) @db.Uuid
+  sessionId        String    @db.Uuid
+  name             TermName
+  midTermStartDate DateTime  @db.Date
+  midTermEndDate   DateTime  @db.Date
+  examStartDate    DateTime? @db.Date
+  examEndDate      DateTime? @db.Date
+  startDate        DateTime? @db.Date
+  endDate          DateTime? @db.Date
+  isCurrent        Boolean   @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -245,7 +254,6 @@ model Subject {
   defaultMaxConsecutive   Int?
   defaultAllowConsecutive Boolean @default(false)
 
-
   school              School               @relation(fields: [schoolId], references: [id], onDelete: Restrict)
   teachingAssignments TeachingAssignment[]
 
@@ -276,6 +284,7 @@ model Room {
 model Period {
   id        String     @id @default(uuid()) @db.Uuid
   schoolId  String     @db.Uuid
+  periodScheduleScheduleId String?               @db.Uuid
   name      String // "Period 1", "Short Break"
   kind      PeriodKind @default(LESSON)
   sequence  Int // display/order position within the day
@@ -286,9 +295,10 @@ model Period {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  school       School                @relation(fields: [schoolId], references: [id], onDelete: Restrict)
-  entries      TimetableEntry[]
-  availability TeacherAvailability[]
+  school                   School                @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  entries                  TimetableEntry[]
+  availability             TeacherAvailability[]
+  periodSchedule           PeriodSchedule?       @relation(fields: [periodScheduleScheduleId], references: [scheduleId], onDelete: Restrict)
 
   // Uniqueness of (schoolId, sequence) among ACTIVE rows is enforced by a partial
   // unique index in raw SQL (see header).
@@ -455,4 +465,17 @@ model SessionToken {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model PeriodSchedule {
+  scheduleId     String      @id @default(uuid()) @db.Uuid
+  schoolId       String      @db.Uuid
+  name           PeriodScheduleKind // "Weekday Schedule", "Friday Schedule"
+  applicableDays DayOfWeek[]
+  isActive       Boolean     @default(true)
+
+  school  School   @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  periods Period[]
+
+  @@index([schoolId, isActive])
 }

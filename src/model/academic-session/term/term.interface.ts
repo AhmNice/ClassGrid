@@ -6,6 +6,10 @@ export interface ITerm {
   name: TermName;
   startDate: Date | null;
   endDate: Date | null;
+  midTermStartDate: Date | null;
+  midTermEndDate: Date | null;
+  examStartDate: Date | null;
+  examEndDate: Date | null;
   isCurrent: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -16,6 +20,10 @@ export interface ITermCreate {
   name: TermName;
   startDate: Date | null;
   endDate: Date | null;
+  midTermStartDate: Date;
+  midTermEndDate: Date;
+  examStartDate: Date | null;
+  examEndDate: Date | null;
   isCurrent?: boolean;
 }
 
@@ -23,5 +31,9 @@ export interface ITermUpdate {
   name?: TermName;
   startDate?: Date | null;
   endDate?: Date | null;
+  midTermStartDate?: Date | null;
+  midTermEndDate?: Date | null;
+  examStartDate?: Date | null;
+  examEndDate?: Date | null;
   isCurrent?: boolean;
 }

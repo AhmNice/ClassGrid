@@ -8,6 +8,9 @@ export interface ITeacher {
   phone: string | null;
   staffCode: string | null;
   isActive: boolean;
+  maxPeriodsPerDay: number | null;
+  maxPeriodsPerWeek: number | null;
+  maxConsecutivePeriods: number | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,6 +23,9 @@ export interface ITeacherCreate {
   email: string;
   phone: string;
   staffCode: string;
+  maxPeriodsPerDay: number | null;
+  maxPeriodsPerWeek: number | null;
+  maxConsecutivePeriods: number | null;
   isActive?: boolean;
 }
 export interface ITeacherUpdate {

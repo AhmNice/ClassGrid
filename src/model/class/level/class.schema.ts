@@ -26,12 +26,11 @@ const classLevelFields = z.object({
 });
 
 export const classLevelListReqSchema = z.object({
-  params: z.object({ schoolId: z.string().uuid() }),
   query: paginationQuery,
 });
 
 export const createClassLevelReqSchema = z.object({
-  body: classLevelFields,
+  body: classLevelFields.omit({ schoolId: true }),
 });
 
 export const classLevelIdReqSchema = z.object({

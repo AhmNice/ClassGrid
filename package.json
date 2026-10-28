@@ -9,7 +9,7 @@
     "*.{ts,js}": [
       "eslint --fix",
       "prettier --write",
-      "jest --findRelatedTests"
+      "jest --passWithNoTests"
     ]
   },
   "scripts": {
@@ -28,7 +28,8 @@
     "build": "prisma generate && tsc && tsc-alias",
     "seed": "tsx src/seed/index.ts",
     "seed:admin": "tsx src/seed/admin.seed.ts",
-    "seed:config": "tsx src/seed/config.seed.ts"
+    "seed:config": "tsx src/seed/config.seed.ts",
+    "seed:school": "tsx src/seeds/school.seeds.ts"
   },
   "overrides": {
     "braces": "^3.0.3",
@@ -43,6 +44,7 @@
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
+    "dayjs": "^1.11.23",
     "express": "^5.2.1",
     "helmet": "^8.3.0",
     "ioredis": "^6.0.0",

@@ -3,12 +3,42 @@ import { protect } from "@/middleware/protection.js";
 import { sanitizeBodyMiddleware, validate } from "@/middleware/validation.js";
 import { schoolController } from "./school.controller.js";
 import {
+  createSchoolReqSchema,
+  schoolListReqSchema,
   schoolIdReqSchema,
   schoolWorkingDaysReqSchema,
+  updateSchoolReqSchema,
 } from "./school.schema.js";
 
 const schoolRouter = express.Router();
 schoolRouter.use(protect);
+schoolRouter.get(
+  "/",
+  validate(schoolListReqSchema),
+  schoolController.getSchools,
+);
+schoolRouter.post(
+  "/",
+  sanitizeBodyMiddleware,
+  validate(createSchoolReqSchema),
+  schoolController.createSchool,
+);
+schoolRouter.get(
+  "/:schoolId",
+  validate(schoolIdReqSchema),
+  schoolController.getSchool,
+);
+schoolRouter.patch(
+  "/:schoolId",
+  sanitizeBodyMiddleware,
+  validate(updateSchoolReqSchema),
+  schoolController.updateSchool,
+);
+schoolRouter.delete(
+  "/:schoolId",
+  validate(schoolIdReqSchema),
+  schoolController.deleteSchool,
+);
 schoolRouter.get(
   "/:schoolId/working-days",
   validate(schoolIdReqSchema),

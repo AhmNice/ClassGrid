@@ -5,6 +5,7 @@ import {
   IClassArmCreate,
   IClassArmListQuery,
   IClassArmUpdate,
+  ISummaryClassArmItem,
 } from "./arm.interface.js";
 import { IClassArmRepo, classArmRepo } from "./arm.repo.js";
 import { IPaginatedResult } from "@/types/pagination.js";
@@ -73,6 +74,28 @@ export class ClassArmService implements IClassArmService {
   ): Promise<IPaginatedResult<IClassArm>> {
     await this.ensureClassLevelExists(classLevelId);
     return await this.repo.getClassArms(classLevelId, query);
+  }
+  async getAllClassArms(
+    query: IClassArmListQuery,
+  ): Promise<IPaginatedResult<ISummaryClassArmItem>> {
+    const result = await this.repo.getAllClassArms(query);
+
+    return {
+      ...result,
+      items: result.items.map((item) => ({
+        id: item.id,
+        name: item.name,
+        classLevelId: item.classLevelId,
+        className: item.classLevel.name,
+        classStage: item.classLevel.stage,
+        isActive: item.isActive,
+        // track: item.classLevel.track,
+        // subjects: item?.subjects,
+        // room: item.room,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+      })),
+    };
   }
 
   async getClassArmById(

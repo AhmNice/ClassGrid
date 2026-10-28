@@ -5,7 +5,6 @@ const subjectIdParams = z.object({
 });
 
 const listQuery = z.object({
-  schoolId: z.string().uuid(),
   query: z.string().trim().optional(),
   isActive: z.preprocess(
     (value) => (value === "true" ? true : value === "false" ? false : value),
@@ -18,7 +17,6 @@ const listQuery = z.object({
 });
 
 const subjectFields = z.object({
-  schoolId: z.string().uuid(),
   name: z.string().trim().min(1),
   code: z.string().trim().min(1).nullable().optional(),
   isActive: z.boolean().optional(),
@@ -71,7 +69,6 @@ export const subjectIdReqSchema = z.object({ params: subjectIdParams });
 export const updateSubjectReqSchema = z.object({
   params: subjectIdParams,
   body: subjectFields
-    .omit({ schoolId: true })
     .partial()
     .refine(
       (body) => Object.keys(body).length > 0,

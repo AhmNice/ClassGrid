@@ -7,7 +7,6 @@ import {
   roomIdReqSchema,
   roomListReqSchema,
   roomTimetableReqSchema,
-  updateRoomPropertiesReqSchema,
   updateRoomReqSchema,
 } from "./room.schema.js";
 
@@ -26,12 +25,6 @@ roomRouter.get(
   roomController.getRoomTimetable,
 );
 roomRouter.get("/:roomId", validate(roomIdReqSchema), roomController.getRoom);
-roomRouter.patch(
-  "/:roomId/properties",
-  sanitizeBodyMiddleware,
-  validate(updateRoomPropertiesReqSchema),
-  roomController.updateRoomProperties,
-);
 roomRouter.patch(
   "/:roomId",
   sanitizeBodyMiddleware,

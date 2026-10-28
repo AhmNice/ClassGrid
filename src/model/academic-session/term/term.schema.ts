@@ -13,6 +13,10 @@ const termFields = z.object({
   name: z.enum(["FIRST", "SECOND", "THIRD"]),
   startDate: z.coerce.date().nullable(),
   endDate: z.coerce.date().nullable(),
+  midTermStartDate: z.coerce.date().nullable().optional(),
+  midTermEndDate: z.coerce.date().nullable().optional(),
+  examStartDate: z.coerce.date().nullable().optional(),
+  examEndDate: z.coerce.date().nullable().optional(),
   isCurrent: z.boolean().optional(),
 });
 

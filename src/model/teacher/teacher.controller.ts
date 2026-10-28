@@ -8,9 +8,14 @@ import { teacherService } from "./teacher.container.js";
 
 class TeacherController {
   readonly createTeacher = asyncHandler(async (req: Request, res: Response) => {
-    const teacher = await teacherService.createTeacher(
-      req.body as ITeacherCreate,
-    );
+    const schoolId = req?.user?.schoolId as string;
+    if (!schoolId) {
+      throw new ApiError(400, "schoolId is required");
+    }
+    const teacher = await teacherService.createTeacher({
+      ...req.body,
+      schoolId,
+    } as ITeacherCreate);
     res
       .status(201)
       .json(new ApiResponse(201, teacher, "Teacher created successfully"));

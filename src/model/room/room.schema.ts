@@ -14,7 +14,7 @@ const roomType = z.enum([
 ]);
 
 const listQuery = z.object({
-  schoolId: z.string().uuid(),
+  // schoolId: z.string().uuid(),
   query: z.string().trim().optional(),
   isActive: z.preprocess(
     (value) => (value === "true" ? true : value === "false" ? false : value),
@@ -35,18 +35,10 @@ const roomFields = z.object({
   isActive: z.boolean().optional(),
 });
 
-const roomProperties = z
-  .object({
-    type: roomType.optional(),
-    capacity: z.coerce.number().int().positive().nullable().optional(),
-  })
-  .refine(
-    (body) => Object.keys(body).length > 0,
-    "At least one room property is required",
-  );
-
 export const roomListReqSchema = z.object({ query: listQuery });
-export const createRoomReqSchema = z.object({ body: roomFields });
+export const createRoomReqSchema = z.object({
+  body: roomFields.omit({ schoolId: true }),
+});
 export const roomIdReqSchema = z.object({ params: roomIdParams });
 export const roomTimetableReqSchema = z.object({
   params: roomIdParams,
@@ -69,9 +61,4 @@ export const updateRoomReqSchema = z.object({
       (body) => Object.keys(body).length > 0,
       "At least one field is required",
     ),
-});
-
-export const updateRoomPropertiesReqSchema = z.object({
-  params: roomIdParams,
-  body: roomProperties,
 });

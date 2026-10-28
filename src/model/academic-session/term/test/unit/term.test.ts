@@ -19,6 +19,10 @@ describe("TermService.createTerm", () => {
     name: "SECOND",
     startDate: new Date("2027-01-01"),
     endDate: new Date("2027-04-30"),
+    midTermStartDate: new Date("2027-02-01"),
+    midTermEndDate: new Date("2027-02-15"),
+    examStartDate: new Date("2027-04-15"),
+    examEndDate: new Date("2027-04-30"),
     isCurrent: false,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -30,6 +34,10 @@ describe("TermService.createTerm", () => {
     name: "FIRST",
     startDate: new Date("2026-09-01"),
     endDate: new Date("2026-12-31"),
+    midTermStartDate: new Date("2026-10-15"),
+    midTermEndDate: new Date("2026-10-31"),
+    examStartDate: new Date("2026-12-15"),
+    examEndDate: new Date("2026-12-31"),
   };
 
   beforeEach(() => {

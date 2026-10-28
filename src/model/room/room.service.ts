@@ -5,7 +5,6 @@ import type {
   IRoom,
   IRoomCreate,
   IRoomListQuery,
-  IRoomProperties,
   IRoomTimetableQuery,
   IRoomUpdate,
 } from "./room.interface.js";
@@ -16,10 +15,6 @@ export interface IRoomService {
   getRooms(query: IRoomListQuery): Promise<IPaginatedResult<IRoom>>;
   getRoomById(id: string): Promise<IRoom | null>;
   updateRoom(id: string, data: IRoomUpdate): Promise<IRoom | null>;
-  updateRoomProperties(
-    id: string,
-    data: IRoomProperties,
-  ): Promise<IRoom | null>;
   deleteRoom(id: string): Promise<boolean>;
   getRoomTimetable(
     roomId: string,
@@ -63,17 +58,6 @@ export class RoomService implements IRoomService {
     return await this.repo.updateRoom(id, { ...clean, name });
   }
 
-  async updateRoomProperties(
-    id: string,
-    data: IRoomProperties,
-  ): Promise<IRoom | null> {
-    const existing = await this.repo.getRoomById(id);
-    if (!existing) return null;
-    if (data.type === undefined && data.capacity === undefined) {
-      throw new ApiError(400, "At least one room property is required");
-    }
-    return await this.repo.updateRoom(id, data);
-  }
   async deleteRoom(id: string): Promise<boolean> {
     return await this.repo.deleteRoom(id);
   }

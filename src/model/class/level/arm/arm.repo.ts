@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import {
   IClassArm,
   IClassArmCreate,
+  IClassArmItem,
   IClassArmListQuery,
   IClassArmUpdate,
 } from "./arm.interface.js";
@@ -19,6 +20,9 @@ export interface IClassArmRepo {
     id: string,
     data: IClassArmUpdate,
   ): Promise<IClassArm | null>;
+  getAllClassArms: (
+    query: IClassArmListQuery,
+  ) => Promise<IPaginatedResult<IClassArmItem>>;
   deleteClassArm(classLevelId: string, id: string): Promise<boolean>;
 }
 export class ClassArmRepo implements IClassArmRepo {
@@ -40,6 +44,43 @@ export class ClassArmRepo implements IClassArmRepo {
     const [items, total] = await prisma.$transaction([
       prisma.classArm.findMany({
         where,
+        skip: (query.page - 1) * query.limit,
+        take: query.limit,
+        orderBy: { [query.sortBy]: query.sortOrder },
+      }),
+      prisma.classArm.count({ where }),
+    ]);
+    return { items, total };
+  }
+  async getAllClassArms(
+    query: IClassArmListQuery,
+  ): Promise<IPaginatedResult<IClassArmItem>> {
+    const where = {
+      // classLevelId,
+      ...(query.query
+        ? { name: { contains: query.query, mode: "insensitive" as const } }
+        : {}),
+      ...(query.isActive === undefined ? {} : { isActive: query.isActive }),
+    };
+    const [items, total] = await prisma.$transaction([
+      prisma.classArm.findMany({
+        where,
+        select: {
+          id: true,
+          name: true,
+          classLevelId: true,
+          isActive: true,
+          createdAt: true,
+          updatedAt: true,
+          classLevel: {
+            select: {
+              id: true,
+              stage: true,
+              name: true,
+              // track: true,
+            },
+          },
+        },
         skip: (query.page - 1) * query.limit,
         take: query.limit,
         orderBy: { [query.sortBy]: query.sortOrder },

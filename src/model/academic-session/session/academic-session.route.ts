@@ -11,6 +11,11 @@ import {
 const academicSessionRouter = express.Router();
 academicSessionRouter.use(protect);
 academicSessionRouter.get("/", academicSessionController.getAcademicSessions);
+
+academicSessionRouter.get(
+  "/current",
+  academicSessionController.getCurrentAcademicSession,
+);
 academicSessionRouter.post(
   "/",
   sanitizeBodyMiddleware,

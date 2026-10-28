@@ -27,37 +27,33 @@ export const validate = (schema: any) => {
     }
   };
 };
-import validator from "validator";
 
 export const sanitizeBodyMiddleware = (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ) => {
   if (req.body) {
+    // The only schemes we actively want to nuke.
+    const BLOCKED_PROTOCOL = /^\s*(javascript|data|vbscript|file):/i;
+
     Object.keys(req.body).forEach((key) => {
-      let value = req.body[key];
+      const value = req.body[key];
+      if (typeof value !== "string") return;
 
-      if (typeof value === "string") {
-        value = sanitizeHtml(value.trim(), {
-          allowedTags: [],
-          allowedAttributes: {},
-          disallowedTagsMode: "discard",
-        });
-        if (value.includes(":")) {
-          const _isUrl = validator.isURL(value, { require_protocol: true });
-          const isSafeProtocol = /^(https?|mailto|tel):/i.test(value);
+      const cleaned = sanitizeHtml(value.trim(), {
+        allowedTags: [],
+        allowedAttributes: {},
+        disallowedTagsMode: "discard",
+      });
 
-          if (!isSafeProtocol) {
-            console.warn(
-              `Blocked suspicious protocol in field ${key}: ${value}`,
-            );
-            value = "";
-          }
-        }
-
-        req.body[key] = value;
+      if (BLOCKED_PROTOCOL.test(cleaned)) {
+        console.warn(`Blocked suspicious protocol in field ${key}: ${cleaned}`);
+        req.body[key] = "";
+        return;
       }
+
+      req.body[key] = cleaned;
     });
   }
   next();

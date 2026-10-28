@@ -1,6 +1,7 @@
 import { ApiError } from "@/utils/errorHandler.js";
 import { ITerm, ITermCreate, ITermUpdate } from "./term.interface.js";
 import { ITermRepo, termRepo } from "./term.repo.js";
+import { TermName } from "@/generated/prisma/enums.js";
 
 export interface ITermService {
   createTerm(data: ITermCreate): Promise<ITerm>;
@@ -22,7 +23,28 @@ export class TermService implements ITermService {
       throw new ApiError(422, "Start date must be before end date");
     }
   }
-
+  private mapDbError(error: any): unknown {
+    if (error.code !== "P2002") throw error;
+    const target = JSON.stringify(error.meta?.target ?? "");
+    if (target.includes("name")) {
+      throw new ApiError(422, "Term name must be unique within the session", [
+        {
+          field: "name",
+          message: "Term name must be unique within the session",
+        },
+      ]);
+    }
+    return new ApiError(409, "Term name must be unique within the session");
+  }
+  private requireName(name: string): string {
+    const trimmed = name.trim();
+    if (!trimmed) {
+      throw new ApiError(422, "Invalid session", [
+        { field: "name", message: "Enter a session name" },
+      ]);
+    }
+    return trimmed;
+  }
   private validateWithinSession(
     startDate: Date | null,
     endDate: Date | null,
@@ -75,7 +97,11 @@ export class TermService implements ITermService {
       data.endDate,
       await this.repo.getTerms(data.sessionId),
     );
-    return await this.repo.createTerm(data);
+    try {
+      return await this.repo.createTerm(data);
+    } catch (error) {
+      throw this.mapDbError(error);
+    }
   }
 
   async getTerms(sessionId: string): Promise<ITerm[]> {
@@ -93,7 +119,8 @@ export class TermService implements ITermService {
   ): Promise<ITerm | null> {
     const existing = await this.repo.getTermById(sessionId, id);
     if (!existing) return null;
-
+    const name =
+      data.name !== undefined ? this.requireName(data.name) : undefined;
     this.validateDates(
       data.startDate !== undefined ? data.startDate : existing.startDate,
       data.endDate !== undefined ? data.endDate : existing.endDate,
@@ -111,7 +138,30 @@ export class TermService implements ITermService {
       data.endDate !== undefined ? data.endDate : existing.endDate,
       (await this.repo.getTerms(sessionId)).filter((term) => term.id !== id),
     );
-    return await this.repo.updateTerm(sessionId, id, data);
+
+    try {
+      return await this.repo.updateTerm(sessionId, id, {
+        ...data,
+        ...(name !== undefined && { name: name as TermName }),
+        ...(data.startDate !== undefined && { startDate: data.startDate }),
+        ...(data.endDate !== undefined && { endDate: data.endDate }),
+        ...(data.midTermStartDate !== undefined && {
+          midTermStartDate: data.midTermStartDate,
+        }),
+        ...(data.midTermEndDate !== undefined && {
+          midTermEndDate: data.midTermEndDate,
+        }),
+        ...(data.examStartDate !== undefined && {
+          examStartDate: data.examStartDate,
+        }),
+        ...(data.examEndDate !== undefined && {
+          examEndDate: data.examEndDate,
+        }),
+        ...(data.isCurrent !== undefined && { isCurrent: data.isCurrent }),
+      });
+    } catch (error) {
+      throw this.mapDbError(error);
+    }
   }
 
   async deleteTerm(sessionId: string, id: string): Promise<boolean> {

@@ -4,16 +4,16 @@ import {
   IAcademicSessionCreate,
   IAcademicSessionUpdate,
 } from "./academic-session.interface.js";
+import { ITerm } from "../term/term.interface.js";
 
 export interface IAcademicSessionRepo {
   createAcademicSession(
     data: IAcademicSessionCreate,
   ): Promise<IAcademicSession>;
-  getAcademicSessions(): Promise<IAcademicSession[]>;
+  getAcademicSessions(schoolId: string): Promise<IAcademicSession[]>;
+  getCurrentAcademicSession(schoolId: string): Promise<IAcademicSession | null>;
   getAcademicSessionById(id: string): Promise<IAcademicSession | null>;
-  getTerms(
-    sessionId: string,
-  ): Promise<Array<{ startDate: Date | null; endDate: Date | null }>>;
+  getTerms(sessionId: string): Promise<ITerm[]>;
   updateAcademicSession(
     id: string,
     data: IAcademicSessionUpdate,
@@ -37,9 +37,18 @@ class AcademicSessionRepo implements IAcademicSessionRepo {
     });
   }
 
-  async getAcademicSessions(): Promise<IAcademicSession[]> {
+  async getAcademicSessions(schoolId: string): Promise<IAcademicSession[]> {
     return await prisma.academicSession.findMany({
+      where: { schoolId },
       orderBy: { createdAt: "desc" },
+    });
+  }
+
+  async getCurrentAcademicSession(
+    schoolId: string,
+  ): Promise<IAcademicSession | null> {
+    return await prisma.academicSession.findFirst({
+      where: { schoolId, isCurrent: true },
     });
   }
 
@@ -49,12 +58,11 @@ class AcademicSessionRepo implements IAcademicSessionRepo {
     });
   }
 
-  async getTerms(
-    sessionId: string,
-  ): Promise<Array<{ startDate: Date | null; endDate: Date | null }>> {
+  async getTerms(sessionId: string): Promise<ITerm[]> {
     return await prisma.term.findMany({
       where: { sessionId },
-      select: { startDate: true, endDate: true },
+      // select: { name: true, startDate: true, endDate: true, isCurrent: true },
+      orderBy: { startDate: "asc" },
     });
   }
 

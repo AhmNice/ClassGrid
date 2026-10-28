@@ -1,16 +1,22 @@
 import { TokenType } from "@/types/general.js";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+
+/** One problem with one input. The frontend shows it under that input. */
+export type FieldError = {
+  field: string;
+  message: string;
+};
 
 export class ApiError extends Error {
   public statusCode: number;
   public details?: any;
   public success: boolean;
-  public errors: any[];
+  public errors: FieldError[];
 
   constructor(
     statusCode: number,
     message: string = "Something went wrong",
-    errors: any[] = [],
+    errors: FieldError[] = [],
     details: any = null,
     stack: string = "",
   ) {
@@ -34,8 +40,14 @@ export class TokenExpiredApiError extends ApiError {
   }
 }
 
-export const errorHandler = (err: any, req: Request, res: Response) => {
+export const errorHandler = (
+  err: any,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   let error = err;
+  let _next = next;
   if (!(error instanceof ApiError)) {
     error = new ApiError(
       error.statusCode || 500,

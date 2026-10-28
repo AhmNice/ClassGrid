@@ -10,8 +10,8 @@ const time = z
   .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must use HH:mm format");
 
 const listQuery = z.object({
-  schoolId: z.string().uuid(),
   query: z.string().trim().optional(),
+  periodScheduleScheduleId: z.string(),
   kind: periodKind.optional(),
   isActive: z.preprocess(
     (value) => (value === "true" ? true : value === "false" ? false : value),
@@ -26,7 +26,6 @@ const listQuery = z.object({
 });
 
 const periodFields = z.object({
-  schoolId: z.string().uuid(),
   name: z.string().trim().min(1),
   kind: periodKind.default("LESSON"),
   sequence: z.coerce.number().int().positive(),
@@ -42,7 +41,8 @@ const validateTimeRange = <T extends z.ZodTypeAny>(schema: T) =>
       value !== null &&
       "startTime" in value &&
       "endTime" in value &&
-      value.startTime < value.endTime,
+      (value as { startTime: string; endTime: string }).startTime <
+        (value as { startTime: string; endTime: string }).endTime,
     "Start time must be before end time",
   );
 
@@ -53,7 +53,7 @@ export const createPeriodReqSchema = z.object({
 export const periodIdReqSchema = z.object({ params: periodIdParams });
 export const reorderPeriodsReqSchema = z.object({
   body: z.object({
-    schoolId: z.string().uuid(),
+    // schoolId: z.string().uuid(),
     periodIds: z.array(z.string().uuid()).min(1),
   }),
 });

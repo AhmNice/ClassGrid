@@ -5,6 +5,7 @@ export interface SessionPayload {
   userId: string;
   email?: string;
   role: UserRole;
+  schoolId?: string;
   // accountStatus: "ACTIVE" | "SUSPENDED" | "BANNED";
 }
 export interface jwtSignReturnType {

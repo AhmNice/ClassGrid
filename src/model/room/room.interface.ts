@@ -24,8 +24,6 @@ export interface IRoomCreate {
 
 export type IRoomUpdate = Partial<Omit<IRoomCreate, "schoolId">>;
 
-export type IRoomProperties = Pick<IRoomCreate, "type" | "capacity">;
-
 export interface IRoomListQuery extends IListQuery {
   schoolId: string;
   isActive?: boolean;

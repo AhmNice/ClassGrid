@@ -6,6 +6,28 @@ export interface IClassArm {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface ISummaryClassArmItem {
+  id: string;
+  name: string;
+  classLevelId: string;
+  className: string;
+  classStage: string;
+  isActive: boolean;
+  track?: string;
+  // subjects?:Subject[];
+  room?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+export interface IClassLevelSummary {
+  id: string;
+  stage: string;
+  name: string;
+  track?: string;
+}
+export interface IClassArmItem extends IClassArm {
+  classLevel: IClassLevelSummary;
+}
 export interface IClassArmCreate {
   classLevelId: string;
   name: string;

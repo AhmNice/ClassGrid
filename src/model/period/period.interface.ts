@@ -5,6 +5,7 @@ export type PeriodKind = "LESSON" | "BREAK";
 export interface IPeriod {
   id: string;
   schoolId: string;
+  periodScheduleScheduleId: string;
   name: string;
   kind: PeriodKind;
   sequence: number;
@@ -19,6 +20,7 @@ export interface IPeriodCreate {
   schoolId: string;
   name: string;
   kind?: PeriodKind;
+  periodScheduleScheduleId: string;
   sequence: number;
   startTime: string;
   endTime: string;

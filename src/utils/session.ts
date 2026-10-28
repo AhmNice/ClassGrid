@@ -74,6 +74,7 @@ export class SessionService {
       userId: payload.userId,
       email: payload.email,
       role: payload.role,
+      schoolId: payload.schoolId,
     };
 
     const accessToken = jwt.sign(
@@ -136,6 +137,7 @@ export class SessionService {
       userId: decoded.userId,
       email: decoded.email,
       role: decoded.role,
+      schoolId: decoded.schoolId,
     };
 
     const newSessionId = crypto.randomUUID();

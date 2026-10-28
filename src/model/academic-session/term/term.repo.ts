@@ -19,7 +19,14 @@ export interface ITermRepo {
 
 class TermRepo implements ITermRepo {
   async createTerm(data: ITermCreate): Promise<ITerm> {
-    return await prisma.term.create({ data });
+    const { sessionId, ...termData } = data;
+    return await prisma.term.create({
+      data: {
+        ...termData,
+        // midTermStartDate: data.midTermStartDate ?? new Date(),
+        session: { connect: { id: sessionId } },
+      },
+    });
   }
 
   async getSessionDates(
@@ -47,6 +54,13 @@ class TermRepo implements ITermRepo {
     id: string,
     data: ITermUpdate,
   ): Promise<ITerm | null> {
+    const { midTermStartDate, midTermEndDate, ...termData } = data;
+    const updateData = {
+      ...termData,
+      ...(midTermStartDate == null ? {} : { midTermStartDate }),
+      ...(midTermEndDate == null ? {} : { midTermEndDate }),
+    };
+
     if (data.isCurrent) {
       return await prisma.$transaction(async (tx) => {
         const term = await tx.term.findFirst({ where: { id, sessionId } });
@@ -58,14 +72,14 @@ class TermRepo implements ITermRepo {
         });
         return await tx.term.update({
           where: { id },
-          data,
+          data: updateData,
         });
       });
     }
 
     const result = await prisma.term.updateMany({
       where: { id, sessionId },
-      data,
+      data: updateData,
     });
     if (result.count === 0) return null;
     return await this.getTermById(sessionId, id);

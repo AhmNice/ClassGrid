@@ -19,6 +19,7 @@ class PeriodController {
   });
 
   readonly getPeriods = asyncHandler(async (req: Request, res: Response) => {
+    const schoolId = String(req?.user?.schoolId);
     const result = await periodService.getPeriods({
       ...normalizeListQuery({
         query:
@@ -32,7 +33,7 @@ class PeriodController {
             ? req.query.sortOrder
             : undefined,
       }),
-      schoolId: String(req.query.schoolId),
+      schoolId,
       kind:
         typeof req.query.kind === "string"
           ? (req.query.kind as IPeriodCreate["kind"])
@@ -68,9 +69,12 @@ class PeriodController {
 
   readonly reorderPeriods = asyncHandler(
     async (req: Request, res: Response) => {
-      const periods = await periodService.reorderPeriods(
-        req.body as IPeriodReorder,
-      );
+      const schoolId = String(req?.user?.schoolId);
+
+      const periods = await periodService.reorderPeriods({
+        ...(req.body as IPeriodReorder),
+        schoolId,
+      });
       res
         .status(200)
         .json(new ApiResponse(200, periods, "Periods reordered successfully"));
