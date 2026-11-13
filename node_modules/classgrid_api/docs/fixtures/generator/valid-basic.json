@@ -1,0 +1,27 @@
+{
+  "name": "valid-basic",
+  "description": "Two assignments can share the week without class, teacher, or room clashes.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["MONDAY", "TUESDAY"],
+    "periods": [
+      { "id": "p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["MONDAY", "TUESDAY"], "periodScheduleId": "weekday" },
+      { "id": "p2", "sequence": 2, "kind": "LESSON", "applicableDays": ["MONDAY", "TUESDAY"], "periodScheduleId": "weekday" }
+    ],
+    "periodSchedules": [{ "id": "weekday", "name": "WEEKDAY_SCHEDULE", "applicableDays": ["MONDAY", "TUESDAY"], "periodIds": ["p1", "p2"] }],
+    "assignments": [
+      { "id": "math-jss1a", "teacherId": "teacher-math", "subjectId": "math", "classArmId": "jss1a", "periodsPerWeek": 2, "requiresDoublePeriod": false },
+      { "id": "english-jss1a", "teacherId": "teacher-english", "subjectId": "english", "classArmId": "jss1a", "periodsPerWeek": 2, "requiresDoublePeriod": false }
+    ],
+    "teachers": [
+      { "id": "teacher-math", "maxPeriodsPerWeek": 4 },
+      { "id": "teacher-english", "maxPeriodsPerWeek": 4 }
+    ],
+    "rooms": [{ "id": "room-1", "type": "CLASSROOM" }],
+    "teacherAvailability": [],
+    "lockedEntries": [],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "SUCCESS", "assignmentCounts": { "math-jss1a": 2, "english-jss1a": 2 } }
+}

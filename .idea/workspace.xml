@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ebf660b6-ce16-4d5e-a7b7-a5c95155069c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.husky/pre-commit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/checklist.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/implementation _road_map.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eslint.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jest.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/migrations/20260930105858_create_timetable_schema/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/migrations/20261002203809_fix_session_token_uuid/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/migrations/20261005125816_update_term_table/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/migrations/20261005135600_add_term_current/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/migrations/20261010200106_added_midterm_exam_dates/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/migrations/20261010202344_make_last_migrate_nullable/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/migrations/migration_lock.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma7.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/scan-todos.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skills-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/db.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/redis.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/openapi.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/registry.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/swagger.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/g.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/session.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/asyncHandler.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/prisma.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/protection.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/validation.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/session/academic-session.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/session/academic-session.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/session/academic-session.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/session/academic-session.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/session/academic-session.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/session/academic-session.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/session/test/unit/academic-session.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/term/term.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/term/term.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/term/term.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/term/term.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/term/term.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/term/term.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/academic-session/term/test/unit/term.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/authentication/auth.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/authentication/auth.docs.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/authentication/auth.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/authentication/auth.repository.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/authentication/auth.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/authentication/auth.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/authentication/route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/arm/arm.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/arm/arm.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/arm/arm.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/arm/arm.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/arm/arm.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/arm/arm.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/arm/test/unit/arm.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/class.container.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/class.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/class.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/class.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/class.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/class.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/class.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/class/level/test/unit/class.service.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/period/period.container.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/period/period.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/period/period.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/period/period.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/period/period.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/period/period.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/period/period.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/room/room.container.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/room/room.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/room/room.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/room/room.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/room/room.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/room/room.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/room/room.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/school/school.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/school/school.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/school/school.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/school/school.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/school/school.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/school/school.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subject/subject.container.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subject/subject.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subject/subject.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subject/subject.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subject/subject.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subject/subject.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subject/subject.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subject/test/unit/subject.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/availability.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/availability.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/availability.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/availability.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/availability.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/availability.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/teacher.container.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/teacher.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/teacher.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/teacher.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/teacher.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/teacher.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/teacher.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/teacher/test/unit/teacher.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/token/token.repo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/token/token.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/index.route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/seeds/permission.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/seeds/school.seeds.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/setup.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/general.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/pagination.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api-response.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/cleaner.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/dateHelper.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/errorHandler.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/helmet.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/session.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validation/comm.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.jest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Projects/ClassGrid" value="3M1HVbRvW7b11ljQg1v309K1RtD" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="3M1G269J3boqm42zQsbTis2RAl3" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="ensembleEnabled" value="true" />
+        <option name="ensembleTierId" value="balance" />
+        <option name="modeId" value="Agent" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_id" />
+            <option name="modelValue" value="ensemble" />
+          </model>
+        </option>
+        <option name="targetType" value="BACKGROUND" />
+        <option name="worktreeMode" value="WORKSPACE" />
+      </template>
+    </option>
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3bd3a6803838-JavaScript-WS-261.22158.274" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ebf660b6-ce16-4d5e-a7b7-a5c95155069c" name="Changes" comment="" />
+      <created>1794510453810</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1794510453810</updated>
+      <workItem from="1794510459294" duration="4508000" />
+      <workItem from="1794545779490" duration="3064000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

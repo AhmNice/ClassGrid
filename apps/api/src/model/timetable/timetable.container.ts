@@ -1,0 +1,17 @@
+import { termRepo } from "@/model/academic-session/term/term.repo.js";
+import { TimeTableRepo } from "./timetable.repo.js";
+import { TimetableService } from "./timetable.service.js";
+import { TimetableValidationService } from "@/service/timetable-validation.service.js";
+import { TimetableEntryRepo } from "@/model/timetable/entry/timetabel-entry.repo.js";
+import { TeachingAssignmentRepo } from "@/model/assignment/teacher/teachingAssignment.repo.js";
+
+const timetableRepo = new TimeTableRepo();
+const entryRepo = new TimetableEntryRepo();
+const validationService = new TimetableValidationService(entryRepo);
+const allocationRepo = new TeachingAssignmentRepo();
+export const timetableService = new TimetableService(
+  timetableRepo,
+  termRepo,
+  allocationRepo,
+  validationService,
+);

@@ -1,0 +1,24 @@
+{
+  "name": "locked-entry-conflict",
+  "description": "Two locked entries occupy the same class slot and cannot be moved.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["MONDAY"],
+    "periods": [{ "id": "p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["MONDAY"], "periodScheduleId": "weekday" }],
+    "periodSchedules": [{ "id": "weekday", "name": "WEEKDAY_SCHEDULE", "applicableDays": ["MONDAY"], "periodIds": ["p1"] }],
+    "assignments": [
+      { "id": "math-jss1a", "teacherId": "teacher-math", "subjectId": "math", "classArmId": "jss1a", "periodsPerWeek": 1, "requiresDoublePeriod": false },
+      { "id": "english-jss1a", "teacherId": "teacher-english", "subjectId": "english", "classArmId": "jss1a", "periodsPerWeek": 1, "requiresDoublePeriod": false }
+    ],
+    "teachers": [{ "id": "teacher-math" }, { "id": "teacher-english" }],
+    "rooms": [{ "id": "room-1", "type": "CLASSROOM" }],
+    "teacherAvailability": [],
+    "lockedEntries": [
+      { "id": "locked-1", "assignmentId": "math-jss1a", "teacherId": "teacher-math", "classArmId": "jss1a", "dayOfWeek": "MONDAY", "periodId": "p1", "roomId": "room-1" },
+      { "id": "locked-2", "assignmentId": "english-jss1a", "teacherId": "teacher-english", "classArmId": "jss1a", "dayOfWeek": "MONDAY", "periodId": "p1", "roomId": "room-1" }
+    ],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "FAILURE", "code": "LOCKED_ENTRY_CONFLICT", "conflictingResource": "classArmId:jss1a" }
+}

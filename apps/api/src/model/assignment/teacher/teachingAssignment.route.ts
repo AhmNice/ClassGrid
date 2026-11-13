@@ -1,0 +1,53 @@
+import express from "express";
+import { protect } from "@/middleware/protection.js";
+import { validate } from "@/middleware/validation.js";
+import { teachingAssignmentController } from "./teachingAssignment.controller.js";
+import {
+  classTeachingAssignmentsReqSchema,
+  createTeachingAssignmentReqSchema,
+  teachingAssignmentIdReqSchema,
+  teacherTeachingAssignmentsReqSchema,
+  teachingAssignmentListReqSchema,
+  updateTeachingAssignmentReqSchema,
+} from "./teachingAssignment.schema.js";
+
+const teachingAssignmentRouter = express.Router();
+teachingAssignmentRouter.use(protect);
+
+teachingAssignmentRouter.get(
+  "/",
+  validate(teachingAssignmentListReqSchema),
+  teachingAssignmentController.list,
+);
+teachingAssignmentRouter.post(
+  "/",
+  validate(createTeachingAssignmentReqSchema),
+  teachingAssignmentController.create,
+);
+teachingAssignmentRouter.get(
+  "/teachers/:teacherId",
+  validate(teacherTeachingAssignmentsReqSchema),
+  teachingAssignmentController.getTeacherAssignments,
+);
+teachingAssignmentRouter.get(
+  "/sessions/:sessionId/class-levels/:classLevelId/class-arms/:classArmId",
+  validate(classTeachingAssignmentsReqSchema),
+  teachingAssignmentController.getClassAssignments,
+);
+teachingAssignmentRouter.get(
+  "/:assignmentId",
+  validate(teachingAssignmentIdReqSchema),
+  teachingAssignmentController.get,
+);
+teachingAssignmentRouter.delete(
+  "/:assignmentId",
+  validate(teachingAssignmentIdReqSchema),
+  teachingAssignmentController.unassign,
+);
+teachingAssignmentRouter.patch(
+  "/:assignmentId",
+  validate(updateTeachingAssignmentReqSchema),
+  teachingAssignmentController.update,
+);
+
+export { teachingAssignmentRouter };

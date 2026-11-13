@@ -1,0 +1,23 @@
+{
+  "name": "friday-short-schedule",
+  "description": "Friday has a valid schedule with fewer periods than weekdays.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["FRIDAY"],
+    "periods": [
+      { "id": "fri-p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" },
+      { "id": "fri-p2", "sequence": 2, "kind": "LESSON", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" }
+    ],
+    "periodSchedules": [
+      { "id": "friday", "name": "FRIDAY_SCHEDULE", "applicableDays": ["FRIDAY"], "periodIds": ["fri-p1", "fri-p2"] }
+    ],
+    "assignments": [{ "id": "math-jss1a", "teacherId": "teacher-math", "subjectId": "math", "classArmId": "jss1a", "periodsPerWeek": 1, "requiresDoublePeriod": false }],
+    "teachers": [{ "id": "teacher-math" }],
+    "rooms": [{ "id": "room-1", "type": "CLASSROOM" }],
+    "teacherAvailability": [],
+    "lockedEntries": [],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "SUCCESS", "usedDays": ["FRIDAY"], "usedPeriodIds": ["fri-p1", "fri-p2"] }
+}

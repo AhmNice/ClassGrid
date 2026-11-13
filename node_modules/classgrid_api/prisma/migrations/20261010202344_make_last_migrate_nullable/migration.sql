@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Term" ALTER COLUMN "examEndDate" DROP NOT NULL,
+ALTER COLUMN "examStartDate" DROP NOT NULL;

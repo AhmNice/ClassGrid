@@ -1,0 +1,22 @@
+{
+  "name": "impossible-teacher-availability",
+  "description": "The only lesson period is unavailable to the assigned teacher.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["MONDAY"],
+    "periods": [{ "id": "p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["MONDAY"], "periodScheduleId": "weekday" }],
+    "periodSchedules": [{ "id": "weekday", "name": "WEEKDAY_SCHEDULE", "applicableDays": ["MONDAY"], "periodIds": ["p1"] }],
+    "assignments": [
+      { "id": "math-jss1a", "teacherId": "teacher-math", "subjectId": "math", "classArmId": "jss1a", "periodsPerWeek": 1, "requiresDoublePeriod": false }
+    ],
+    "teachers": [{ "id": "teacher-math" }],
+    "rooms": [{ "id": "room-1", "type": "CLASSROOM" }],
+    "teacherAvailability": [
+      { "teacherId": "teacher-math", "dayOfWeek": "MONDAY", "periodId": "p1", "status": "UNAVAILABLE" }
+    ],
+    "lockedEntries": [],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "FAILURE", "code": "NO_CANDIDATE_SLOT", "assignmentId": "math-jss1a", "blockedReason": "TEACHER_UNAVAILABLE" }
+}

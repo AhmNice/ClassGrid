@@ -1,0 +1,41 @@
+import express from "express";
+import { protect } from "@/middleware/protection.js";
+import { validate } from "@/middleware/validation.js";
+import { teacherSubjectController } from "./teacher-subject.controller.js";
+import {
+  bulkUpdateTeacherSubjectReqSchema,
+  createTeacherSubjectReqSchema,
+  teacherSubjectIdReqSchema,
+  teacherSubjectListReqSchema,
+} from "./teacher-subject.schema.js";
+
+const teacherSubjectRouter = express.Router();
+teacherSubjectRouter.use(protect);
+
+teacherSubjectRouter.get(
+  "/",
+  validate(teacherSubjectListReqSchema),
+  teacherSubjectController.list,
+);
+teacherSubjectRouter.post(
+  "/",
+  validate(createTeacherSubjectReqSchema),
+  teacherSubjectController.assign,
+);
+teacherSubjectRouter.patch(
+  "/bulk-update",
+  validate(bulkUpdateTeacherSubjectReqSchema),
+  teacherSubjectController.bulkUpdate,
+);
+teacherSubjectRouter.get(
+  "/:teacherSubjectId",
+  validate(teacherSubjectIdReqSchema),
+  teacherSubjectController.get,
+);
+teacherSubjectRouter.delete(
+  "/:teacherSubjectId",
+  validate(teacherSubjectIdReqSchema),
+  teacherSubjectController.remove,
+);
+
+export { teacherSubjectRouter };

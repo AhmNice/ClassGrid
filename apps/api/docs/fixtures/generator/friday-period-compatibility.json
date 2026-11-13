@@ -1,0 +1,24 @@
+{
+  "name": "friday-period-compatibility",
+  "description": "Weekday-only periods are not eligible for Friday generation.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["FRIDAY"],
+    "periods": [
+      { "id": "weekday-p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY"], "periodScheduleId": "weekday" },
+      { "id": "fri-p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" }
+    ],
+    "periodSchedules": [
+      { "id": "weekday", "name": "WEEKDAY_SCHEDULE", "applicableDays": ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY"], "periodIds": ["weekday-p1"] },
+      { "id": "friday", "name": "FRIDAY_SCHEDULE", "applicableDays": ["FRIDAY"], "periodIds": ["fri-p1"] }
+    ],
+    "assignments": [{ "id": "history-jss1a", "teacherId": "teacher-history", "subjectId": "history", "classArmId": "jss1a", "periodsPerWeek": 1, "requiresDoublePeriod": false }],
+    "teachers": [{ "id": "teacher-history" }],
+    "rooms": [{ "id": "room-1", "type": "CLASSROOM" }],
+    "teacherAvailability": [],
+    "lockedEntries": [],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "SUCCESS", "usedDays": ["FRIDAY"], "usedPeriodIds": ["fri-p1"], "excludedPeriodIds": ["weekday-p1"] }
+}

@@ -1,0 +1,51 @@
+import express from "express";
+import { protect } from "@/middleware/protection.js";
+import { validate } from "@/middleware/validation.js";
+import { schoolController } from "./school.controller.js";
+import {
+  createSchoolReqSchema,
+  schoolListReqSchema,
+  schoolIdReqSchema,
+  schoolWorkingDaysReqSchema,
+  updateSchoolReqSchema,
+} from "./school.schema.js";
+
+const schoolRouter = express.Router();
+schoolRouter.use(protect);
+schoolRouter.get(
+  "/",
+  validate(schoolListReqSchema),
+  schoolController.getSchools,
+);
+schoolRouter.post(
+  "/",
+  validate(createSchoolReqSchema),
+  schoolController.createSchool,
+);
+schoolRouter.get(
+  "/:schoolId",
+  validate(schoolIdReqSchema),
+  schoolController.getSchool,
+);
+schoolRouter.patch(
+  "/:schoolId",
+  validate(updateSchoolReqSchema),
+  schoolController.updateSchool,
+);
+schoolRouter.delete(
+  "/:schoolId",
+  validate(schoolIdReqSchema),
+  schoolController.deleteSchool,
+);
+schoolRouter.get(
+  "/:schoolId/working-days",
+  validate(schoolIdReqSchema),
+  schoolController.getWorkingDays,
+);
+schoolRouter.patch(
+  "/:schoolId/working-days",
+  validate(schoolWorkingDaysReqSchema),
+  schoolController.updateWorkingDays,
+);
+
+export default schoolRouter;

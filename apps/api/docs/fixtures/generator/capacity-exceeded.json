@@ -1,0 +1,20 @@
+{
+  "name": "capacity-exceeded",
+  "description": "Two weekly lessons are required but the only class has one legal slot.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["MONDAY"],
+    "periods": [{ "id": "p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["MONDAY"], "periodScheduleId": "weekday" }],
+    "periodSchedules": [{ "id": "weekday", "name": "WEEKDAY_SCHEDULE", "applicableDays": ["MONDAY"], "periodIds": ["p1"] }],
+    "assignments": [
+      { "id": "math-jss1a", "teacherId": "teacher-math", "subjectId": "math", "classArmId": "jss1a", "periodsPerWeek": 2, "requiresDoublePeriod": false }
+    ],
+    "teachers": [{ "id": "teacher-math" }],
+    "rooms": [{ "id": "room-1", "type": "CLASSROOM" }],
+    "teacherAvailability": [],
+    "lockedEntries": [],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "FAILURE", "code": "CAPACITY_EXCEEDED", "assignmentId": "math-jss1a", "requiredUnits": 2, "availableClassSlots": 1 }
+}

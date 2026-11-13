@@ -1,0 +1,22 @@
+{
+  "name": "friday-break-exclusion",
+  "description": "A Friday break is display-only and cannot receive a lesson.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["FRIDAY"],
+    "periods": [
+      { "id": "fri-p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" },
+      { "id": "fri-break", "sequence": 2, "kind": "BREAK", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" },
+      { "id": "fri-p2", "sequence": 3, "kind": "LESSON", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" }
+    ],
+    "periodSchedules": [{ "id": "friday", "name": "FRIDAY_SCHEDULE", "applicableDays": ["FRIDAY"], "periodIds": ["fri-p1", "fri-break", "fri-p2"] }],
+    "assignments": [{ "id": "english-jss1a", "teacherId": "teacher-english", "subjectId": "english", "classArmId": "jss1a", "periodsPerWeek": 1, "requiresDoublePeriod": false }],
+    "teachers": [{ "id": "teacher-english" }],
+    "rooms": [{ "id": "room-1", "type": "CLASSROOM" }],
+    "teacherAvailability": [],
+    "lockedEntries": [],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "SUCCESS", "lessonPeriodIds": ["fri-p1", "fri-p2"], "excludedPeriodIds": ["fri-break"] }
+}

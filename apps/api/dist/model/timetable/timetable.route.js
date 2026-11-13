@@ -1,0 +1,14 @@
+import express from "express";
+import { protect } from "@/middleware/protection.js";
+import { validate } from "@/middleware/validation.js";
+import { timetableController } from "./timetable.controller.js";
+import { createTimetableReqSchema, duplicateTimetableReqSchema, timetableIdReqSchema, timetableListReqSchema, updateTimetableReqSchema, } from "./timetable.schema.js";
+const timetableRouter = express.Router();
+timetableRouter.use(protect);
+timetableRouter.get("/", validate(timetableListReqSchema), timetableController.list);
+timetableRouter.post("/", validate(createTimetableReqSchema), timetableController.create);
+timetableRouter.patch("/:timetableId", validate(updateTimetableReqSchema), timetableController.update);
+timetableRouter.post("/:timetableId/duplicate", validate(duplicateTimetableReqSchema), timetableController.duplicate);
+timetableRouter.post("/:timetableId/publish", validate(timetableIdReqSchema), timetableController.publish);
+timetableRouter.post("/:timetableId/archive", validate(timetableIdReqSchema), timetableController.archive);
+export default timetableRouter;

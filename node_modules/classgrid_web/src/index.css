@@ -1,0 +1,396 @@
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/jetbrains-mono";
+
+@import "tailwindcss";
+
+/* ========================================
+   ClassGrid — Light Theme (Default)
+======================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Typography */
+  --font-heading: "Geist Variable", sans-serif;
+  --font-body: "Geist Variable", sans-serif;
+
+  /* Brand */
+  --color-primary: #173b6c;
+  --color-primary-hover: #102d53;
+  --color-primary-accent: #2457a7;
+  --color-primary-container: #dbeafe;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #102d53;
+
+  /* App backgrounds */
+  --color-background: #f8fafc;
+  --color-on-background: #0f172a;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-on-surface: #0f172a;
+  --color-surface-variant: #e2e8f0;
+  --color-on-surface-variant: #475569;
+
+  /* Surface containers */
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f8fafc;
+  --color-surface-container: #f1f5f9;
+  --color-surface-container-high: #e2e8f0;
+  --color-surface-container-highest: #cbd5e1;
+
+  /* Inverse surfaces */
+  --color-inverse-surface: #0f172a;
+  --color-inverse-on-surface: #f8fafc;
+  --color-surface-tint: #2457a7;
+
+  /* Secondary */
+  --color-secondary: #475569;
+  --color-secondary-container: #e2e8f0;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #0f172a;
+
+  /* Text */
+  --text-primary: var(--color-on-surface);
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+
+  /* Borders and focus */
+  --color-outline: #64748b;
+  --color-outline-variant: #cbd5e1;
+  --border-color: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --focus-ring: #2457a7;
+
+  /* Component aliases */
+  --app-bg: var(--color-background);
+  --card-bg: var(--color-surface);
+  --card-hover-bg: var(--color-surface-container-low);
+  --section-bg: var(--color-surface-container);
+
+  /* Sidebar */
+  --sidebar-bg: #173b6c;
+  --sidebar-text: #e2e8f0;
+  --sidebar-hover-bg: #1d4a85;
+  --sidebar-active-bg: #2457a7;
+  --sidebar-active-text: #ffffff;
+
+  /* Buttons */
+  --primary-btn-bg: #2457a7;
+  --primary-btn-hover-bg: #1d4a85;
+  --primary-btn-text: #ffffff;
+
+  --secondary-btn-bg: var(--color-surface);
+  --secondary-btn-hover-bg: var(--color-surface-container);
+  --secondary-btn-text: var(--color-on-surface);
+
+  /* Status */
+  --color-success: #15803d;
+  --color-success-container: #dcfce7;
+  --color-on-success-container: #14532d;
+
+  --color-warning: #92400e;
+  --color-warning-container: #fef3c7;
+  --color-on-warning-container: #78350f;
+
+  --color-error: #b91c1c;
+  --color-error-container: #fee2e2;
+  --color-on-error-container: #7f1d1d;
+
+  --color-info: #0369a1;
+  --color-info-container: #e0f2fe;
+  --color-on-info-container: #0c4a6e;
+
+  /* Timetable */
+  --timetable-bg: var(--color-surface);
+  --timetable-header-bg: var(--color-surface-container);
+  --timetable-cell-bg: var(--color-surface);
+  --timetable-cell-hover-bg: var(--color-primary-container);
+  --timetable-grid-border: var(--border-color);
+  --timetable-conflict-bg: var(--color-error-container);
+  --timetable-conflict-text: var(--color-error);
+
+  /* Inputs */
+  --input-bg: var(--color-surface);
+  --input-border: var(--border-strong);
+
+  /* Miscellaneous */
+  --overlay-bg: rgb(15 23 42 / 50%);
+  --card-radius: 0.75rem;
+}
+
+/* ========================================
+   ClassGrid — Dark Theme
+   Activate with class="dark" on <html>
+======================================== */
+#nprogress .bar{
+  background: var(--color-primary) !important;
+  height: 3px !important;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--color-primary), 0 0 5px var(--color-primary) !important;
+}
+.dark {
+  color-scheme: dark;
+
+  /* Brand */
+  --color-primary: #a8c7fa;
+  --color-primary-hover: #c2d8ff;
+  --color-primary-accent: #8ab4f8;
+  --color-primary-container: #244a78;
+  --color-on-primary: #102d53;
+  --color-on-primary-container: #dbeafe;
+
+  /* App backgrounds */
+  --color-background: #0b1220;
+  --color-on-background: #e2e8f0;
+
+  /* Surfaces */
+  --color-surface: #111b2e;
+  --color-on-surface: #e2e8f0;
+  --color-surface-variant: #334155;
+  --color-on-surface-variant: #cbd5e1;
+
+  /* Surface containers */
+  --color-surface-container-lowest: #080e19;
+  --color-surface-container-low: #111b2e;
+  --color-surface-container: #172338;
+  --color-surface-container-high: #223149;
+  --color-surface-container-highest: #334155;
+
+  /* Inverse surfaces */
+  --color-inverse-surface: #e2e8f0;
+  --color-inverse-on-surface: #0f172a;
+  --color-surface-tint: #8ab4f8;
+
+  /* Secondary */
+  --color-secondary: #cbd5e1;
+  --color-secondary-container: #334155;
+  --color-on-secondary: #0f172a;
+  --color-on-secondary-container: #e2e8f0;
+
+  /* Text */
+  --text-primary: var(--color-on-surface);
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+
+  /* Borders and focus */
+  --color-outline: #94a3b8;
+  --color-outline-variant: #475569;
+  --border-color: #334155;
+  --border-strong: #475569;
+  --focus-ring: #8ab4f8;
+
+  /* Component aliases */
+  --app-bg: var(--color-background);
+  --card-bg: var(--color-surface);
+  --card-hover-bg: var(--color-surface-container);
+  --section-bg: var(--color-surface-container-low);
+
+  /* Sidebar */
+  --sidebar-bg: #080e19;
+  --sidebar-text: #cbd5e1;
+  --sidebar-hover-bg: #172338;
+  --sidebar-active-bg: #244a78;
+  --sidebar-active-text: #ffffff;
+
+  /* Buttons */
+  --primary-btn-bg: #8ab4f8;
+  --primary-btn-hover-bg: #a8c7fa;
+  --primary-btn-text: #102d53;
+
+  --secondary-btn-bg: var(--color-surface-container-high);
+  --secondary-btn-hover-bg: var(--color-surface-container-highest);
+  --secondary-btn-text: var(--color-on-surface);
+
+  /* Status */
+  --color-success: #86efac;
+  --color-success-container: #14532d;
+  --color-on-success-container: #dcfce7;
+
+  --color-warning: #fcd34d;
+  --color-warning-container: #78350f;
+  --color-on-warning-container: #fef3c7;
+
+  --color-error: #fca5a5;
+  --color-error-container: #7f1d1d;
+  --color-on-error-container: #fee2e2;
+
+  --color-info: #7dd3fc;
+  --color-info-container: #0c4a6e;
+  --color-on-info-container: #e0f2fe;
+
+  /* Timetable */
+  --timetable-bg: var(--color-surface);
+  --timetable-header-bg: var(--color-surface-container);
+  --timetable-cell-bg: var(--color-surface);
+  --timetable-cell-hover-bg: var(--color-primary-container);
+  --timetable-grid-border: var(--border-color);
+  --timetable-conflict-bg: var(--color-error-container);
+  --timetable-conflict-text: var(--color-error);
+
+  /* Inputs */
+  --input-bg: var(--color-surface-container-low);
+  --input-border: var(--border-strong);
+
+  /* Miscellaneous */
+  --overlay-bg: rgb(0 0 0 / 65%);
+}
+
+/* ========================================
+   Tailwind CSS v4 Theme Utilities
+======================================== */
+
+@theme inline {
+  /* Typography */
+  --font-heading: "Geist Variable", sans-serif;
+  --font-sans: "Geist Variable", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  /* Brand */
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-accent: var(--color-primary-accent);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary: var(--color-on-primary);
+  --color-on-primary-container: var(--color-on-primary-container);
+
+  /* Background and surfaces */
+  --color-background: var(--color-background);
+  --color-on-background: var(--color-on-background);
+  --color-surface: var(--color-surface);
+  --color-on-surface: var(--color-on-surface);
+  --color-surface-variant: var(--color-surface-variant);
+  --color-on-surface-variant: var(--color-on-surface-variant);
+
+  --color-surface-container-lowest: var(--color-surface-container-lowest);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+
+  --color-inverse-surface: var(--color-inverse-surface);
+  --color-inverse-on-surface: var(--color-inverse-on-surface);
+  --color-surface-tint: var(--color-surface-tint);
+
+  /* Secondary */
+  --color-secondary: var(--color-secondary);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-on-secondary: var(--color-on-secondary);
+  --color-on-secondary-container: var(--color-on-secondary-container);
+
+  /* Text and borders */
+  --color-foreground: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-subtle: var(--text-muted);
+  --color-border: var(--border-color);
+  --color-outline: var(--color-outline);
+  --color-outline-variant: var(--color-outline-variant);
+  --color-ring: var(--focus-ring);
+
+  /* Status */
+  --color-success: var(--color-success);
+  --color-success-container: var(--color-success-container);
+  --color-on-success-container: var(--color-on-success-container);
+
+  --color-warning: var(--color-warning);
+  --color-warning-container: var(--color-warning-container);
+  --color-on-warning-container: var(--color-on-warning-container);
+
+  --color-error: var(--color-error);
+  --color-error-container: var(--color-error-container);
+  --color-on-error-container: var(--color-on-error-container);
+
+  --color-info: var(--color-info);
+  --color-info-container: var(--color-info-container);
+  --color-on-info-container: var(--color-on-info-container);
+}
+
+/* ========================================
+   Spacing Tokens
+   Usage: p-space-md, gap-space-lg, px-margin, ...
+======================================== */
+
+@theme {
+  /* Scale */
+  --spacing-space-xs: 0.25rem; /* 4px  */
+  --spacing-space-sm: 0.5rem; /* 8px  */
+  --spacing-space-md: 0.75rem; /* 12px */
+  --spacing-space-lg: 1rem; /* 16px */
+  --spacing-space-xl: 1.5rem; /* 24px */
+
+  /* Semantic aliases (same values as above, named by job) */
+  --spacing-gutter-dense: 0.5rem; /* 8px  gap in tight grids */
+  --spacing-gutter: 1rem; /* 16px gap between blocks */
+  --spacing-margin-compact: 1rem; /* 16px page edge on small screens */
+  --spacing-margin: 1.5rem; /* 24px page edge on large screens */
+}
+
+/* ========================================
+   Global Defaults
+======================================== */
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    font-family: var(--font-body);
+    overflow: hidden; /* page never scrolls; only inner containers do */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+
+  * {
+    border-color: var(--border-color);
+  }
+}
+
+/* Hide scrollbars ONLY on opt-in containers, not globally. */
+.scrollable-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-y: auto;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  background: transparent;
+}
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0px;
+  background: transparent;
+}
+
+/* For specific scrollable containers that need to hide scrollbars */
+
+.scrollable-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-y: auto;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  background: transparent;
+}

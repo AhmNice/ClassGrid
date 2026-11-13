@@ -1,0 +1,16 @@
+import express from "express";
+import { protect } from "@/middleware/protection.js";
+import { validate } from "@/middleware/validation.js";
+import { timetableEntryController } from "./timetable-entry.controller.js";
+import { assignTimetableEntryRoomReqSchema, createTimetableEntryReqSchema, timetableEntryClassReqSchema, timetableEntryIdReqSchema, timetableEntryRoomReqSchema, timetableEntryTeacherReqSchema, timetableEntryTimetableReqSchema, updateTimetableEntryReqSchema, } from "./timetable-entry.schema.js";
+const timetableEntryRouter = express.Router();
+timetableEntryRouter.use(protect);
+timetableEntryRouter.post("/:timetableId/entries", validate(createTimetableEntryReqSchema), timetableEntryController.create);
+timetableEntryRouter.patch("/entries/:entryId", validate(updateTimetableEntryReqSchema), timetableEntryController.update);
+timetableEntryRouter.patch("/entries/:entryId/room", validate(assignTimetableEntryRoomReqSchema), timetableEntryController.assignRoom);
+timetableEntryRouter.delete("/entries/:entryId", validate(timetableEntryIdReqSchema), timetableEntryController.delete);
+timetableEntryRouter.get("/:timetableId/entries", validate(timetableEntryTimetableReqSchema), timetableEntryController.getWeeklyEntries);
+timetableEntryRouter.get("/:timetableId/classes/:classArmId/entries", validate(timetableEntryClassReqSchema), timetableEntryController.getClassWeeklyEntries);
+timetableEntryRouter.get("/:timetableId/teachers/:teacherId/entries", validate(timetableEntryTeacherReqSchema), timetableEntryController.getTeacherWeeklyEntries);
+timetableEntryRouter.get("/:timetableId/rooms/:roomId/entries", validate(timetableEntryRoomReqSchema), timetableEntryController.getRoomWeeklyEntries);
+export default timetableEntryRouter;

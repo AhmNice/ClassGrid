@@ -1,0 +1,22 @@
+{
+  "name": "friday-double-period",
+  "description": "A double period is placed in two adjacent Friday lesson periods.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["FRIDAY"],
+    "periods": [
+      { "id": "fri-p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" },
+      { "id": "fri-p2", "sequence": 2, "kind": "LESSON", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" },
+      { "id": "fri-p3", "sequence": 3, "kind": "LESSON", "applicableDays": ["FRIDAY"], "periodScheduleId": "friday" }
+    ],
+    "periodSchedules": [{ "id": "friday", "name": "FRIDAY_SCHEDULE", "applicableDays": ["FRIDAY"], "periodIds": ["fri-p1", "fri-p2", "fri-p3"] }],
+    "assignments": [{ "id": "science-jss1a", "teacherId": "teacher-science", "subjectId": "science", "classArmId": "jss1a", "periodsPerWeek": 2, "requiresDoublePeriod": true }],
+    "teachers": [{ "id": "teacher-science" }],
+    "rooms": [{ "id": "room-1", "type": "SCIENCE_LAB" }],
+    "teacherAvailability": [],
+    "lockedEntries": [],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "SUCCESS", "assignmentId": "science-jss1a", "doublePeriodPeriodIds": ["fri-p1", "fri-p2"], "sameDay": "FRIDAY", "adjacent": true }
+}

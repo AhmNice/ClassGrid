@@ -1,0 +1,1 @@
+export const schoolName = import.meta.env.VITE_SCHOOL_NAME ?? "ClassGrid";

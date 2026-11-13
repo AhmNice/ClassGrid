@@ -1,0 +1,25 @@
+{
+  "name": "preferred-slots",
+  "description": "A preferred teacher slot is selected when both legal schedules are otherwise equivalent.",
+  "input": {
+    "schoolId": "school-a",
+    "term": { "id": "term-1", "sessionId": "session-1", "name": "FIRST" },
+    "days": ["MONDAY"],
+    "periods": [
+      { "id": "p1", "sequence": 1, "kind": "LESSON", "applicableDays": ["MONDAY"], "periodScheduleId": "weekday" },
+      { "id": "p2", "sequence": 2, "kind": "LESSON", "applicableDays": ["MONDAY"], "periodScheduleId": "weekday" }
+    ],
+    "periodSchedules": [{ "id": "weekday", "name": "WEEKDAY_SCHEDULE", "applicableDays": ["MONDAY"], "periodIds": ["p1", "p2"] }],
+    "assignments": [
+      { "id": "science-jss1a", "teacherId": "teacher-science", "subjectId": "science", "classArmId": "jss1a", "periodsPerWeek": 1, "requiresDoublePeriod": false }
+    ],
+    "teachers": [{ "id": "teacher-science" }],
+    "rooms": [{ "id": "room-1", "type": "SCIENCE_LAB" }],
+    "teacherAvailability": [
+      { "teacherId": "teacher-science", "dayOfWeek": "MONDAY", "periodId": "p2", "status": "PREFERRED" }
+    ],
+    "lockedEntries": [],
+    "options": { "seed": 17, "maxSearchNodes": 1000 }
+  },
+  "expected": { "status": "SUCCESS", "preferredSlotsUsed": 1 }
+}
